@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './forms.module.css';
 
 import Input from '../components/form/Input';
@@ -8,58 +8,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const NewCustomer = () => {
-  // Estado para controlar os campos do formulário
   const [customer, setCustomer] = useState({
     name: '',
     phone: '',
     email: '',
+    birthDate: '',
+    observation: '',
   });
-  const [error, setError] = useState(null); // Mensagem de erro
-  const [success, setSuccess] = useState(false); // Controle de sucesso
-  const [nextId, setNextId] = useState(null); // Próximo ID sequencial
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Função para obter o próximo ID disponível no banco
-  useEffect(() => {
-    const fetchNextId = async () => {
-      try {
-        const response = await api.get('/customers');
-        const maxId = response.data.reduce(
-          (max, customer) => Math.max(max, Number(customer.id) || 0), // Garante que IDs anteriores sejam tratados como número
-          0
-        );
-        setNextId(String(maxId + 1)); // Converte para string antes de salvar no estado
-      } catch (err) {
-        console.error('Erro ao buscar o próximo ID:', err);
-        setNextId("1"); // Define como string mesmo em caso de erro
-      }
-    };
-
-    fetchNextId();
-  }, []);
-
-  // Função para lidar com alterações nos campos
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCustomer({ ...customer, [name]: value });
   };
 
-  // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(false);
     setError(null);
 
-    try {
-      if (!customer.name || !customer.phone || !customer.email) {
-        setError('Todos os campos são obrigatórios.');
-        return;
-      }
+    if (!customer.name.trim()) {
+      setError('O campo Nome é obrigatório.');
+      return;
+    }
 
-      const newCustomer = { id: String(nextId), ...customer }; // Garante que o ID seja string
-      await api.post('/customers', newCustomer);
-      setSuccess(true);
-      navigate('/customers'); // Redireciona após sucesso
+    try {
+      await api.post('/customers', customer);
+      navigate('/customers');
     } catch (err) {
       console.error('Erro ao criar cliente:', err);
       setError('Erro ao criar cliente. Tente novamente.');
@@ -79,7 +54,7 @@ const NewCustomer = () => {
           handleOnChange={handleChange}
         />
         <Input
-          type="phone"
+          type="tel"
           text="Telefone"
           name="phone"
           placeholder="(00) 00000-0000"
@@ -94,6 +69,21 @@ const NewCustomer = () => {
           value={customer.email}
           handleOnChange={handleChange}
         />
+        <Input
+          type="date"
+          text="Data de nascimento"
+          name="birthDate"
+          value={customer.birthDate}
+          handleOnChange={handleChange}
+        />
+        <Input
+          type="textarea"
+          text="Observação"
+          name="observation"
+          placeholder="Digite uma observação"
+          value={customer.observation}
+          handleOnChange={handleChange}
+        />
       </div>
       <div className={styles.buttons}>
         <button type="submit">
@@ -103,8 +93,6 @@ const NewCustomer = () => {
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>
-      {/* Feedback ao usuário */}
-      {success && <p className={styles.success}>Cliente criado com sucesso!</p>}
       {error && <p className={styles.error}>{error}</p>}
     </form>
   );

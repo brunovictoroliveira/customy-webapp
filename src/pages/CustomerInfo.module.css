@@ -1,0 +1,57 @@
+.page {
+  width: 100vw;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.title {
+  width: 310px;
+  color: var(--yellow);
+  font-size: 2.2rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.infoList {
+  width: 100vw;
+  background-color: var(--darkgray);
+  padding: 1rem 2.5rem;
+}
+
+.infoItem {
+  border-bottom: 1px solid var(--lightgray);
+  padding: 0.9rem 0;
+}
+
+.infoItem:last-child {
+  border-bottom: 0;
+}
+
+.infoItem dt {
+  color: var(--yellow);
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.infoItem dd {
+  color: var(--white);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.message {
+  color: var(--yellow);
+  padding: 2rem;
+  text-align: center;
+}

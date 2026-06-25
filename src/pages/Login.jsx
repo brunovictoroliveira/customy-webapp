@@ -4,39 +4,35 @@ import styles from './Login.module.css';
 
 import Input from '../components/form/Input';
 import SubmitButton from '../components/form/SubmitButton';
+import { login } from '../services/auth';
 
 function Login() {
-  const navigate = useNavigate(); // Para redirecionar após login
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState(''); // Para exibir mensagens de erro
+  const [error, setError] = useState('');
 
-  // Atualiza os valores dos campos do formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Lida com a submissão do formulário
   const handleLogin = (e) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário
+    e.preventDefault();
+    setError('');
 
     if (!formData.email || !formData.password) {
       setError('Por favor, preencha todos os campos.');
       return;
     }
 
-    // Substitua esta lógica pela integração com sua API de autenticação
-    if (
-      formData.email === 'teste@email.com' &&
-      formData.password === '123456'
-    ) {
-      alert('Login bem-sucedido!');
-      navigate('/customers'); // Redireciona para a página de clientes
-    } else {
-      setError('E-mail ou senha inválidos.');
+    try {
+      login(formData);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -47,12 +43,12 @@ function Login() {
 
         <form onSubmit={handleLogin}>
           <Input
-            type="text"
+            type="email"
             text="E-mail"
             name="email"
             placeholder="Digite seu e-mail"
-            value={formData.email} // Campo controlado
-            handleOnChange={handleChange} // Atualiza o estado
+            value={formData.email}
+            handleOnChange={handleChange}
           />
 
           <Input
@@ -60,13 +56,13 @@ function Login() {
             text="Senha"
             name="password"
             placeholder="Digite sua senha"
-            value={formData.password} // Campo controlado
-            handleOnChange={handleChange} // Atualiza o estado
+            value={formData.password}
+            handleOnChange={handleChange}
           />
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <SubmitButton text="LOGIN" />
+          <SubmitButton text="LOGIN" type="submit" />
         </form>
 
         <span>Não tem uma conta?</span>

@@ -4,82 +4,99 @@
       "id": "1",
       "name": "Bruno Silva",
       "phone": "123-456-7890",
-      "email": "bruno.silva@example.com"
+      "email": "bruno.silva@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "2",
       "name": "Ana Pereira",
       "phone": "987-654-3210",
-      "email": "ana.pereira@example.com"
+      "email": "ana.pereira@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "3",
       "name": "Carlos Souza",
       "phone": "456-789-1234",
-      "email": "carlos.souza@example.com"
+      "email": "carlos.souza@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "4",
       "name": "Débora Martins",
       "phone": "789-123-4567",
-      "email": "debora.martins@example.com"
+      "email": "debora.martins@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "5",
       "name": "Eduardo Lima",
       "phone": "321-654-9870",
-      "email": "eduardo.lima@example.com"
+      "email": "eduardo.lima@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "6",
       "name": "Fernanda Costa",
       "phone": "654-789-3210",
-      "email": "fernanda.costa@example.com"
+      "email": "fernanda.costa@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "7",
       "name": "Guilherme Alves",
       "phone": "987-321-6540",
-      "email": "guilherme.alves@example.com"
+      "email": "guilherme.alves@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "8",
       "name": "Helena Nunes",
       "phone": "789-654-1230",
-      "email": "helena.nunes@example.com"
+      "email": "helena.nunes@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "9",
       "name": "Isabela Ferreira",
       "phone": "654-321-9870",
-      "email": "isabela.ferreira@example.com"
+      "email": "isabela.ferreira@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
       "id": "10",
       "name": "João Oliveira",
       "phone": "321-987-6540",
-      "email": "joao.oliveira@example.com"
+      "email": "joao.oliveira@example.com",
+      "observation": "",
+      "birthDate": ""
     },
     {
-      "id": "11",
-      "name": "Sara Testes",
-      "phone": "21987654321",
-      "email": "teste@teste.com"
-    },
-    {
-      "id": "12",
-      "name": "Teste 240425",
-      "phone": "1122334455",
-      "email": "teste@teste.com"
+      "id": "556b",
+      "name": "Joseph",
+      "phone": "",
+      "email": "",
+      "observation": "",
+      "birthDate": ""
     }
   ],
   "notes": [
     {
-      "id": "1",
+      "date": "2026-06-25",
+      "title": "Primeira Reunião [editada]",
+      "note": "Discutimos os requisitos iniciais do projeto. [editada]",
       "customerId": "1",
-      "date": "2025-03-21",
-      "title": "Primeira Reunião",
-      "note": "Discutimos os requisitos iniciais do projeto."
+      "updatedAt": "2026-06-25T19:31:12.544Z",
+      "id": "1"
     },
     {
       "id": "2",
@@ -89,13 +106,6 @@
       "note": "Foi decidido usar React.js no front e json-server no back."
     },
     {
-      "id": "3",
-      "customerId": "3",
-      "date": "2025-03-23",
-      "title": "Proposta de Melhorias",
-      "note": "Carlos sugeriu melhorias para o fluxo de autenticação."
-    },
-    {
       "id": "4",
       "customerId": "3",
       "date": "2025-03-24",
@@ -103,11 +113,12 @@
       "note": "Trabalhamos em otimizações no json-server."
     },
     {
-      "id": "5",
-      "customerId": "3",
       "date": "2025-03-25",
-      "title": "Finalização de Tarefas",
-      "note": "Revisamos todas as tarefas pendentes."
+      "title": "[edição testada] Finalização de Tarefas",
+      "note": "Revisamos todas as tarefas pendentes.",
+      "customerId": "3",
+      "updatedAt": "2026-06-25T19:06:43.936Z",
+      "id": "5"
     },
     {
       "id": "6",
@@ -166,11 +177,29 @@
       "note": "Ajustamos o ambiente de desenvolvimento."
     },
     {
-      "id": 14,
-      "customerId": null,
-      "noteDate": "2025-04-24",
-      "title": "Nova anotação de teste",
-      "content": "Testando nova anotação, lorem ipsum, lorem ipsuim, teiteiteitiete"
+      "id": "6145",
+      "date": "2026-06-25",
+      "title": "Corte de cabelo",
+      "note": "O cliente pediu para fazer passar a máquina zero, sem navalha.",
+      "customerId": "1",
+      "updatedAt": "2026-06-25T19:28:29.913Z",
+      "createdAt": "2026-06-25T19:28:29.913Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "1",
+      "customerId": "1",
+      "date": "2025-04-25",
+      "time": "09:00",
+      "description": "Atendimento inicial cadastrado como exemplo."
+    },
+    {
+      "id": "2",
+      "customerId": "3",
+      "date": "2025-04-25",
+      "time": "14:30",
+      "description": "Retorno para acompanhamento."
     }
   ]
 }

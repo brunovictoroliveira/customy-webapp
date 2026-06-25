@@ -24,3 +24,9 @@
   cursor: pointer;
   color: var(--yellow);
 }
+
+.error {
+  color: var(--lightred);
+  max-width: 310px;
+  text-align: center;
+}

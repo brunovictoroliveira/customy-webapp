@@ -1,0 +1,84 @@
+.page {
+  width: 100vw;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--yellow);
+}
+
+.form,
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filters {
+  background-color: var(--darkgray);
+  width: 100vw;
+  padding: 1rem 0;
+}
+
+.select {
+  width: 310px;
+  height: 57px;
+  font-family: "Roboto Slab", serif;
+  font-size: 1.1rem;
+  background-color: var(--darkgray);
+  color: var(--yellow);
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--yellow);
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.label {
+  width: 310px;
+  margin-bottom: 10px;
+}
+
+.appointmentsList {
+  width: 100vw;
+  max-height: 34vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--darkgray);
+  padding: 1rem 2.5rem;
+}
+
+.appointment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-bottom: 1px solid var(--lightgray);
+  padding: 0.8rem 0;
+}
+
+.appointment strong {
+  color: var(--yellow);
+}
+
+.appointmentActions,
+.buttons {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.buttons {
+  flex-direction: column;
+}
+
+.error,
+.empty {
+  color: var(--yellow);
+  text-align: center;
+}

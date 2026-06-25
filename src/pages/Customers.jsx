@@ -5,48 +5,72 @@ import SubmitButton from '../components/form/SubmitButton';
 import Customer from '../components/customers_page/Customer';
 import Container from '../components/layout/Container';
 import BigButton from '../components/global/BigButton';
+import ConfirmDialog from '../components/global/ConfirmDialog';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { logout } from '../services/auth';
 
 function Customers() {
-  const [customers, setCustomers] = useState([]); // Lista completa de clientes
-  const [loading, setLoading] = useState(true); // Controle de carregamento
-  const [search, setSearch] = useState(''); // Estado para o valor digitado no input
-  const [filteredCustomers, setFilteredCustomers] = useState([]); // Lista filtrada
+  const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [error, setError] = useState('');
+  const [customerToDelete, setCustomerToDelete] = useState(null);
 
-  useEffect(() => {
-    // Fazer a requisição à API
-    api
-      .get('/customers')
-      .then((response) => {
-        // Converta o id para número ao processar os dados
-        const processedData = response.data.map((customer) => ({
-          ...customer,
-          id: Number(customer.id),
-        }));
-        setCustomers(processedData); // Atualiza a lista completa de clientes
-        setFilteredCustomers(processedData); // Inicialmente, exibe todos os clientes
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar clientes:', error);
-        setLoading(false); // Garante que o carregamento encerre, mesmo com erro
-      });
-  }, []);
-
-  // Lida com mudanças no campo de busca
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value); // Atualiza o estado com o valor digitado
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await api.get('/customers');
+      setCustomers(response.data);
+    } catch (err) {
+      console.error('Erro ao buscar clientes:', err);
+      setError('Não foi possível carregar os clientes.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Filtra os clientes ao clicar no botão buscar
-  const handleSearch = () => {
-    const filtered = customers.filter((customer) =>
-      customer.name.toLowerCase().includes(search.toLowerCase()),
-    );
-    setFilteredCustomers(filtered); // Atualiza a lista filtrada
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const confirmDelete = async () => {
+    if (!customerToDelete) {
+      return;
+    }
+
+    try {
+      const notesResponse = await api.get(
+        `/notes?customerId=${customerToDelete.id}`,
+      );
+      await Promise.all(
+        notesResponse.data.map((note) => api.delete(`/notes/${note.id}`)),
+      );
+      await api.delete(`/customers/${customerToDelete.id}`);
+      setCustomers((currentCustomers) =>
+        currentCustomers.filter(
+          (customer) => String(customer.id) !== String(customerToDelete.id),
+        ),
+      );
+    } catch (err) {
+      console.error('Erro ao excluir cliente:', err);
+      setError('Erro ao excluir cliente. Tente novamente.');
+    } finally {
+      setCustomerToDelete(null);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -57,38 +81,51 @@ function Customers() {
           <Input
             type="text"
             name="busca"
-            placeholder="Faça sua busca"
-            aria-label="Campo de busca" // Para auxiliar na acessibilidade
-            value={search} // Controlado pelo estado
-            handleOnChange={handleSearchChange} // Atualiza o estado
-          />
-          <SubmitButton
-            text="BUSCAR"
-            customClass="signup_btn"
-            onClick={handleSearch}
+            placeholder="Digite o nome do(a) cliente"
+            aria-label="Campo de busca"
+            value={search}
+            handleOnChange={(e) => setSearch(e.target.value)}
           />
         </div>
+
+        {error && <p className={styles.error}>{error}</p>}
+
         <div className={styles.customersList}>
           {loading ? (
-            <p>Carregando...</p> // Mostrar carregamento enquanto os dados são buscados
-          ) : (
+            <p>Carregando...</p>
+          ) : filteredCustomers.length > 0 ? (
             filteredCustomers.map((customer) => (
               <Customer
                 key={customer.id}
                 id={customer.id}
                 name={customer.name}
+                onDelete={(id, name) => setCustomerToDelete({ id, name })}
               />
             ))
+          ) : (
+            <p className={styles.empty}>Nenhum cliente encontrado.</p>
           )}
         </div>
         <div className={styles.buttons}>
           <Link to="/customers/new">
             <BigButton icon="newCostumer" name="NOVO CLIENTE" />
           </Link>
-          <Link to="/">
-            <SubmitButton text="DESLOGAR" customClass="logoffBtn" />
+          <Link to="/appointments">
+            <BigButton icon="calendar" name="AGENDA" />
           </Link>
+          <SubmitButton
+            text="DESLOGAR"
+            customClass="logoffBtn"
+            onClick={handleLogout}
+          />
         </div>
+        {customerToDelete && (
+          <ConfirmDialog
+            message={`Deseja excluir ${customerToDelete.name} e suas anotações?`}
+            onCancel={() => setCustomerToDelete(null)}
+            onConfirm={confirmDelete}
+          />
+        )}
       </div>
     </Container>
   );

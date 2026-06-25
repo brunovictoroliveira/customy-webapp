@@ -8,20 +8,30 @@
   margin-bottom: 10px;
 }
 
-.form_control input {
+.form_control input,
+.form_control textarea {
   width: 310px;
   height: 57px;
   font-family: "Roboto Slab", serif;
   font-size: 1.3rem;
-  background-color: var(--darkgrey);
+  background-color: var(--darkgray);
   color: var(--yellow);
   padding-left: 10px;
+  line-height: 1.5;
   border-radius: 5px;
   border: 1px solid;
   border-color: var(--yellow);
   outline: none;
 }
 
-.form_control input:focus {
+.form_control textarea {
+  min-height: 170px;
+  padding-top: 10px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.form_control input:focus,
+.form_control textarea:focus {
   border-color: var(--mustard);
 }

@@ -8,25 +8,28 @@ import SubmitButton from '../components/form/SubmitButton';
 import api from '../services/api';
 
 const EditCustomer = () => {
-  const { id } = useParams(); // Captura o ID do cliente da URL
-  const navigate = useNavigate(); // Para redirecionar após salvar
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [customer, setCustomer] = useState({
-    customerName: '',
-    phoneNumber: '',
+    name: '',
+    phone: '',
     email: '',
+    birthDate: '',
+    observation: '',
   });
-  const [loading, setLoading] = useState(true); // Controle de carregamento
-  const [error, setError] = useState(null); // Controle de erros
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Busca os dados do cliente ao montar o componente
   useEffect(() => {
     api
       .get(`/customers/${id}`)
       .then((response) => {
         setCustomer({
-          customerName: response.data.name || '',
-          phoneNumber: response.data.phone || '',
+          name: response.data.name || '',
+          phone: response.data.phone || '',
           email: response.data.email || '',
+          birthDate: response.data.birthDate || '',
+          observation: response.data.observation || '',
         });
         setLoading(false);
       })
@@ -37,75 +40,88 @@ const EditCustomer = () => {
       });
   }, [id]);
 
-  // Lida com alterações no formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCustomer({ ...customer, [name]: value });
   };
 
-  // Lida com o envio do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    api
-      .put(`/customers/${id}`, {
-        name: customer.customerName,
-        phone: customer.phoneNumber,
-        email: customer.email,
-      })
-      .then(() => {
-        alert('Cliente atualizado com sucesso!');
-        navigate('/customers'); // Redireciona para a lista de clientes
-      })
-      .catch((err) => {
-        console.error('Erro ao atualizar cliente:', err);
-        alert('Erro ao atualizar o cliente. Tente novamente.');
-      });
+    setError(null);
+
+    if (!customer.name.trim()) {
+      setError('O campo Nome é obrigatório.');
+      return;
+    }
+
+    try {
+      await api.patch(`/customers/${id}`, customer);
+      navigate(`/notes/${id}`);
+    } catch (err) {
+      console.error('Erro ao atualizar cliente:', err);
+      setError('Erro ao atualizar o cliente. Tente novamente.');
+    }
   };
 
-  // Renderiza a interface
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h1 className={styles.title}>Editar cliente</h1>
       {loading ? (
         <p>Carregando...</p>
-      ) : error ? (
+      ) : error && !customer.name ? (
         <p className={styles.error}>{error}</p>
       ) : (
         <div className={styles.inputs}>
           <Input
             type="text"
             text="Nome"
-            name="customerName"
+            name="name"
             placeholder="Digite o nome do(a) cliente"
-            value={customer.customerName} // Campo controlado
-            handleOnChange={handleChange} // Atualiza o estado
+            value={customer.name}
+            handleOnChange={handleChange}
           />
           <Input
-            type="phone"
+            type="tel"
             text="Telefone"
-            name="phoneNumber"
+            name="phone"
             placeholder="(00) 00000-0000"
-            value={customer.phoneNumber} // Campo controlado
-            handleOnChange={handleChange} // Atualiza o estado
+            value={customer.phone}
+            handleOnChange={handleChange}
           />
           <Input
             type="email"
             text="E-mail"
             name="email"
             placeholder="example@email.com"
-            value={customer.email} // Campo controlado
-            handleOnChange={handleChange} // Atualiza o estado
+            value={customer.email}
+            handleOnChange={handleChange}
+          />
+          <Input
+            type="date"
+            text="Data de nascimento"
+            name="birthDate"
+            value={customer.birthDate}
+            handleOnChange={handleChange}
+          />
+          <Input
+            type="textarea"
+            text="Observação"
+            name="observation"
+            placeholder="Digite uma observação"
+            value={customer.observation}
+            handleOnChange={handleChange}
           />
         </div>
       )}
       <div className={styles.buttons}>
-        <button type="submit">
+        <button type="submit" disabled={loading}>
           <BigButton icon="save" name="SALVAR" />
         </button>
-        <Link to="/customers">
+        <Link to={`/notes/${id}`}>
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>
+      {error && customer.name && <p className={styles.error}>{error}</p>}
     </form>
   );
 };

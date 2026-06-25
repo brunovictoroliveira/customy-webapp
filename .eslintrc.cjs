@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2021: true },
+  env: { browser: true, es2021: true, node: true },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -17,6 +17,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'prettier/prettier': ['error', "windows"]
+    'prettier/prettier': ['error', { endOfLine: 'auto' }]
   },
 }

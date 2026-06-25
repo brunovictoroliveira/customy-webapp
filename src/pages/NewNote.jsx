@@ -4,133 +4,134 @@ import styles from './forms.module.css';
 import Input from '../components/form/Input';
 import BigButton from '../components/global/BigButton';
 import SubmitButton from '../components/form/SubmitButton';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 
-const NewNote = () => {
-  const [note, setNote] = useState({
-    title: '',
-    note: '', // Mantém a estrutura correta conforme o banco
-  }); // Estado para controlar os campos do formulário
-  const [error, setError] = useState(null); // Mensagem de erro
-  const [success, setSuccess] = useState(false); // Controle de sucesso
-  const [nextId, setNextId] = useState(null); // Próximo ID sequencial
-  const [searchParams] = useSearchParams(); // Captura query strings, como customerId
-  const navigate = useNavigate(); // Para redirecionamento após sucesso
-  const customerId = searchParams.get('customerId'); // Captura o ID do cliente relacionado
+const getToday = () => new Date().toISOString().slice(0, 10);
 
-  // Função para obter o próximo ID disponível no banco
+const NewNote = () => {
+  const { customerId, noteId } = useParams();
+  const isEditing = Boolean(noteId);
+  const [note, setNote] = useState({
+    date: getToday(),
+    title: '',
+    note: '',
+  });
+  const [loading, setLoading] = useState(isEditing);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const fetchNextId = async () => {
+    if (!isEditing) {
+      return;
+    }
+
+    const fetchNote = async () => {
       try {
-        const response = await api.get('/notes');
-        const maxId = response.data.reduce(
-          (max, note) => Math.max(max, Number(note.id) || 0), // Garante que IDs anteriores sejam tratados corretamente
-          0,
-        );
-        setNextId(String(maxId + 1)); // Converte para string antes de salvar no estado
+        const response = await api.get(`/notes/${noteId}`);
+        setNote({
+          date: response.data.date || getToday(),
+          title: response.data.title || '',
+          note: response.data.note || '',
+        });
       } catch (err) {
-        console.error('Erro ao buscar o próximo ID:', err);
-        setNextId('1'); // Define como string mesmo em caso de erro
+        console.error('Erro ao buscar anotação:', err);
+        setError('Não foi possível carregar a anotação.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchNextId();
-  }, []);
+    fetchNote();
+  }, [isEditing, noteId]);
 
-  // Função para lidar com alterações nos campos
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNote({ ...note, [name]: value });
   };
 
-  // Função para formatar a data no padrão `dd/mm/yyyy`
-  const getFormattedDate = () => {
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Mês começa do 0
-    const year = now.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-  // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(false);
     setError(null);
 
+    if (!note.title.trim()) {
+      setError('O campo Título é obrigatório.');
+      return;
+    }
+
+    if (!customerId) {
+      setError('ID do cliente não identificado.');
+      return;
+    }
+
+    const payload = {
+      ...note,
+      customerId: String(customerId),
+      updatedAt: new Date().toISOString(),
+    };
+
     try {
-      if (!note.title || !note.note) {
-        setError('Todos os campos são obrigatórios.');
-        return;
+      if (isEditing) {
+        await api.put(`/notes/${noteId}`, payload);
+      } else {
+        await api.post('/notes', {
+          ...payload,
+          createdAt: new Date().toISOString(),
+        });
       }
 
-      if (!customerId) {
-        setError('ID do cliente não identificado.');
-        return;
-      }
-
-      const newNote = {
-        id: String(nextId),
-        customerId: String(customerId),
-        date: getFormattedDate(), // Insere a data automaticamente
-        timestamp: new Date().toISOString(), // Mantém a hora oculta para auditoria
-        ...note,
-      };
-
-      await api.post('/notes', newNote);
-      setSuccess(true);
-      navigate(`/notes/${customerId}`); // Redireciona para a página de notas do cliente
+      navigate(`/notes/${customerId}`);
     } catch (err) {
-      console.error('Erro ao criar anotação:', err);
-      setError('Erro ao criar anotação. Tente novamente.');
+      console.error('Erro ao salvar anotação:', err);
+      setError('Erro ao salvar anotação. Tente novamente.');
     }
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h1 className={styles.title}>Nova anotação</h1>
-      <div className={styles.inputs}>
-        <Input
-          type="text"
-          text="Título"
-          name="title"
-          placeholder="Digite o título da anotação"
-          value={note.title}
-          handleOnChange={handleChange}
-        />
-        <Input
-          type="textarea"
-          text="Conteúdo"
-          name="note"
-          placeholder="Escreva sua anotação"
-          value={note.note}
-          handleOnChange={handleChange}
-        />
-      </div>
+      <h1 className={styles.title}>
+        {isEditing ? 'Editar anotação' : 'Nova anotação'}
+      </h1>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <div className={styles.inputs}>
+          <Input
+            type="date"
+            text="Data"
+            name="date"
+            value={note.date}
+            handleOnChange={handleChange}
+          />
+          <Input
+            type="text"
+            text="Título"
+            name="title"
+            placeholder="Digite o título da anotação"
+            value={note.title}
+            handleOnChange={handleChange}
+          />
+          <Input
+            type="textarea"
+            text="Anotação"
+            name="note"
+            placeholder="Escreva sua anotação"
+            value={note.note}
+            handleOnChange={handleChange}
+          />
+        </div>
+      )}
       <div className={styles.buttons}>
-        <button type="submit">
+        <button type="submit" disabled={loading}>
           <BigButton icon="save" name="SALVAR" />
         </button>
-        {/* Tratamento para evitar erro ao voltar */}
-        {customerId ? (
-          <Link to={`/notes/${customerId}`}>
-            <SubmitButton text="VOLTAR" customClass="logoffBtn" />
-          </Link>
-        ) : (
-          <Link to="/notes">
-            <SubmitButton text="VOLTAR" customClass="logoffBtn" />
-          </Link>
-        )}
+        <Link to={customerId ? `/notes/${customerId}` : '/customers'}>
+          <SubmitButton text="VOLTAR" customClass="logoffBtn" />
+        </Link>
       </div>
-      {/* Feedback ao usuário */}
-      {success && (
-        <p className={styles.success}>Anotação criada com sucesso!</p>
-      )}
       {error && <p className={styles.error}>{error}</p>}
     </form>
   );
 };
 
 export default NewNote;
-

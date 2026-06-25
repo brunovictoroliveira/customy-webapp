@@ -32,3 +32,10 @@
   height: auto;
   gap: 0.6rem;
 }
+
+.error,
+.empty {
+  color: var(--yellow);
+  padding: 1rem 2.5rem;
+  text-align: center;
+}

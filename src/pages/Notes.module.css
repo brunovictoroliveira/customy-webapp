@@ -11,10 +11,16 @@
   padding-bottom: 0.5rem;
 }
 
-.phoneNumber {
-  font-size: 1.2rem;
-  color: var(--yellow);
+.customerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding-left: 2.5rem;
+  padding-bottom: 0.8rem;
+}
+
+.customerActions button:first-child {
+  width: 245px;
 }
 
 .title {
@@ -28,11 +34,27 @@
 
 .notesList {
   background-color: var(--lightgray);
-  height: 60vh;
+  height: 56vh;
   width: 100vw;
   padding: 0 2.5rem;
 
   /* implementação de rolagem */
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.pageActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 0 1rem;
+}
+
+.error,
+.loading,
+.noNotes {
+  color: var(--yellow);
+  padding: 1rem 2.5rem;
+  text-align: center;
 }

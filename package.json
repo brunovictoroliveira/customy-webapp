@@ -8,16 +8,25 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "server": "json-server --watch backend/db.json --port 5000"
+    "server": "node backend/src/server.js",
+    "server:mock": "json-server --watch backend/db.json --port 5000",
+    "db:seed": "node backend/src/scripts/seedFromJson.js --reset"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -23,3 +23,15 @@
 button {
   background-color: transparent;
 }
+
+.error {
+  color: var(--lightred);
+  max-width: 310px;
+  text-align: center;
+}
+
+.success {
+  color: var(--yellow);
+  max-width: 310px;
+  text-align: center;
+}

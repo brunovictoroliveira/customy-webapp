@@ -2,31 +2,69 @@ import styles from './NoteCard.module.css';
 import Button from '../global/Button';
 import PropTypes from 'prop-types';
 
-function NoteCard({ title, content, date, onExpand, onEdit, onDelete }) {
+const formatDate = (date) => {
+  if (!date) {
+    return 'Data não disponível';
+  }
+
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(date)) {
+    return date;
+  }
+
+  const parsedDate = new Date(`${date}T00:00:00`);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  return parsedDate.toLocaleDateString('pt-BR');
+};
+
+function NoteCard({
+  title,
+  content,
+  date,
+  expanded,
+  onExpand,
+  onEdit,
+  onDelete,
+}) {
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <div className={styles.date}>{new Date(date).toLocaleDateString()}</div>
+        <div className={styles.date}>{formatDate(date)}</div>
         <div className={styles.buttons}>
-          <Button type="ExpandButton" onClick={onExpand} />
-          <Button type="EditButton" onClick={onEdit} />
-          <Button type="DeleteButton" onClick={onDelete} />
+          <Button
+            type="ExpandButton"
+            onClick={onExpand}
+            title={expanded ? 'Recolher anotação' : 'Expandir anotação'}
+          />
+          <Button type="EditButton" onClick={onEdit} title="Editar anotação" />
+          <Button
+            type="DeleteButton"
+            onClick={onDelete}
+            title="Excluir anotação"
+          />
         </div>
       </div>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.text}>{content}</div>
+      <div
+        className={`${styles.title} ${!expanded ? styles.collapsedTitle : ''}`}
+      >
+        {title}
+      </div>
+      {expanded && <div className={styles.text}>{content}</div>}
     </div>
   );
 }
 
 NoteCard.propTypes = {
-  title: PropTypes.string.isRequired, // Título da anotação
-  content: PropTypes.string, // Conteúdo da anotação
-  date: PropTypes.string.isRequired, // Data da anotação
-  onExpand: PropTypes.func, // Função para expandir a anotação
-  onEdit: PropTypes.func, // Função para editar a anotação
-  onDelete: PropTypes.func, // Função para deletar a anotação
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  date: PropTypes.string.isRequired,
+  expanded: PropTypes.bool.isRequired,
+  onExpand: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default NoteCard;
-
