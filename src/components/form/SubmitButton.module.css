@@ -1,7 +1,7 @@
 .btn {
   background-color: var(--blue);
   color: #fff;
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
   font-size: 1.2rem;
   font-weight: 500;
   width: 310px;
@@ -32,4 +32,10 @@
 
 .logoffBtn:hover {
   background-color: var(--lightred);
+}
+
+.customerInfoBtn {
+  width: 225px;
+  height: 48px;
+  font-size: 0.95rem;
 }
