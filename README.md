@@ -1,74 +1,90 @@
 # Customy Webapp
 
-Sistema de gerenciamento de clientes com histórico de anotações e agenda integrada, baseado no escopo do TCC disponível em `docs/tcc-bruno-victor-de-oliveira-lima-uerj.pdf`.
+Aplicacao React + Vite para gerenciamento de clientes, anotacoes e agenda.
 
-## Escopo atual
+## Onde paramos
 
-- Login e cadastro com autenticação simulada em `localStorage`.
-- Rotas protegidas para as áreas internas.
-- Cadastro, listagem, busca, edição e exclusão de clientes.
-- Histórico de anotações por cliente.
-- Criação, edição, expansão e exclusão de anotações.
-- Agenda com cliente, data, horário, observação, edição, exclusão e filtros por cliente/data.
-- Persistência real preparada com MongoDB + Mongoose no backend Express.
-- Mock preservado com `json-server` em `backend/db.json` para comparacao/desenvolvimento rapido.
+- A interface ainda usa autenticacao simulada no localStorage.
+- As telas consomem a API em http://localhost:5000.
+- O caminho mais rapido para continuar o desenvolvimento e usar o mock com json-server.
+- O backend Express com MongoDB/Mongoose ja esta preparado, mas o mock segue preservado para testes rapidos.
 
-## Como rodar
+## Como rodar o projeto
 
-Instale as dependências:
+### 1. Instale as dependencias
 
-```bash
+~~~bash
 npm install
-```
+~~~
 
-Configure o ambiente:
+### 2. Suba o back end
 
-```bash
-copy .env.example .env
-```
+Para desenvolvimento rapido, use a API mock com json-server. Ela usa os dados de backend/db.json e roda em http://localhost:5000.
 
-Inicie uma instancia local do MongoDB ou configure `MONGODB_URI` no `.env`.
-
-Inicie a API real em um terminal:
-
-```bash
-npm run server
-```
-
-Para usar o mock antigo com `json-server`:
-
-```bash
+~~~bash
 npm run server:mock
-```
+~~~
 
-Inicie o frontend em outro terminal:
+Endpoints principais do mock:
 
-```bash
+~~~text
+http://localhost:5000/customers
+http://localhost:5000/notes
+http://localhost:5000/appointments
+~~~
+
+### 3. Suba o front end
+
+Em outro terminal, rode:
+
+~~~bash
 npm run dev
-```
+~~~
 
-A API usa `http://localhost:5000`. O Vite informará a URL local do frontend.
+Abra a URL informada pelo Vite. Neste projeto, a porta configurada e:
 
-Para importar os dados de `backend/db.json` no MongoDB de desenvolvimento:
+~~~text
+http://localhost:4000
+~~~
 
-```bash
+Acesso de teste da interface:
+
+~~~text
+E-mail: teste@email.com
+Senha: 123456
+~~~
+
+## Opcional: API real com MongoDB
+
+Se quiser usar o backend Express com MongoDB em vez do mock, crie o arquivo .env:
+
+~~~bash
+copy .env.example .env
+~~~
+
+Inicie um MongoDB local ou ajuste MONGODB_URI no .env.
+
+Se quiser importar os dados iniciais:
+
+~~~bash
 npm run db:seed
-```
+~~~
 
-## Acesso de teste
+Suba a API real:
 
-- E-mail: `teste@email.com`
-- Senha: `123456`
+~~~bash
+npm run server
+~~~
 
-A UI atual ainda usa autenticação simulada em `localStorage`. O backend real ja possui rotas de autenticacao em `/auth`, documentadas pela modelagem em `docs/modelagem-banco-real.md`. A decisão da fase anterior está registrada em `docs/decisao-autenticacao.md`.
+Depois, em outro terminal, suba o frontend:
 
-## Validação
+~~~bash
+npm run dev
+~~~
 
-```bash
+## Validacao
+
+~~~bash
 npm run lint
 npm run build
-```
-
-## Observações
-
-A estrutura visual existente foi mantida com CSS Modules. Os ajustes de estilo feitos nesta etapa adicionam suporte a textarea, estados de erro/vazio e uma agenda mais completa sem substituir a identidade visual do projeto. O arquivo `backend/db.json` agora funciona como seed/mock; a persistência real fica no MongoDB.
+~~~
