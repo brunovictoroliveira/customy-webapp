@@ -1,0 +1,125 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 48px 32px;
+}
+
+.signupContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 32px;
+}
+
+.logo {
+  display: block;
+  width: 150px;
+  height: 150px;
+  background-image: url('../assets/logos/logo_customy_white.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.signupForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 350px));
+  justify-content: center;
+  gap: 24px 32px;
+  width: min(100%, 960px);
+  padding: 40px;
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+}
+
+.signupForm > h1,
+.error,
+.actions {
+  grid-column: 1 / -1;
+}
+
+.signupForm > h1 {
+  font-size: 2.8rem;
+  text-align: center;
+}
+
+.error {
+  color: var(--lightred);
+  max-width: 100%;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .page {
+    align-items: flex-start;
+    padding: 70px 24px 60px;
+  }
+
+  .signupContent {
+    gap: 28px;
+  }
+
+  .signupForm {
+    width: min(100%, 960px);
+    padding: clamp(32px, 4vw, 40px);
+  }
+}
+
+@media (max-width: 956px) {
+  .page {
+    align-items: flex-start;
+    padding: clamp(40px, 7vh, 64px) 20px clamp(48px, 8vh, 72px);
+  }
+
+  .signupContent {
+    gap: 24px;
+  }
+
+  .logo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .signupForm {
+    grid-template-columns: minmax(0, 350px);
+    justify-content: center;
+    gap: 20px;
+    width: min(100%, 480px);
+    padding: clamp(24px, 5vw, 40px);
+  }
+
+  .signupForm > h1 {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions > a,
+  .actions > button {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+
+  .signupForm input,
+  .signupForm textarea {
+    width: 100%;
+  }
+}

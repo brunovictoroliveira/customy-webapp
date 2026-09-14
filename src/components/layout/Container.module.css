@@ -9,3 +9,24 @@
   left: 0;
   right: 0;
 }
+
+@media (max-width: 1024px) {
+  .container {
+    /* position: static; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    /* justify-content: flex-start; */
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 956px) {
+  .container {
+    position: static;
+    justify-content: flex-start;
+  }
+}

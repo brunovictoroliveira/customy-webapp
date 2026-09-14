@@ -18,10 +18,10 @@ function Dashboard() {
       <p className={styles.subtitle}>O que deseja gerenciar agora?</p>
 
       <div className={styles.actions}>
-        <Link to="/customers">
+        <Link to="/clientes">
           <BigButton icon="newCostumer" name="CLIENTES" />
         </Link>
-        <Link to="/appointments">
+        <Link to="/agenda">
           <BigButton icon="calendar" name="AGENDA" />
         </Link>
         <SubmitButton

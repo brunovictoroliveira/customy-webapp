@@ -80,7 +80,7 @@ const NewNote = () => {
         });
       }
 
-      navigate(`/notes/${customerId}`);
+      navigate(`/anotacoes/${customerId}`);
     } catch (err) {
       console.error('Erro ao salvar anotação:', err);
       setError('Erro ao salvar anotação. Tente novamente.');
@@ -125,7 +125,7 @@ const NewNote = () => {
         <button type="submit" disabled={loading}>
           <BigButton icon="save" name="SALVAR" />
         </button>
-        <Link to={customerId ? `/notes/${customerId}` : '/customers'}>
+        <Link to={customerId ? `/anotacoes/${customerId}` : '/clientes'}>
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>

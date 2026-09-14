@@ -305,7 +305,7 @@ function Appointments() {
       </div>
 
       <div className={styles.buttons}>
-        <Link to="/customers">
+        <Link to="/clientes">
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>

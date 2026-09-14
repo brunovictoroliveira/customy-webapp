@@ -1,10 +1,18 @@
 import styles from './SubmitButton.module.css';
 import PropTypes from 'prop-types';
 
-function SubmitButton({ text, customClass, onClick, type = 'button' }) {
+function SubmitButton({
+  text,
+  customClass = '',
+  className = '',
+  onClick,
+  type = 'button',
+}) {
+  const variantClass = customClass ? styles[customClass] : '';
+
   return (
     <button
-      className={`${styles.btn} ${styles[customClass]}`}
+      className={`${styles.btn} ${variantClass} ${className}`.trim()}
       onClick={onClick}
       type={type}
     >
@@ -16,6 +24,7 @@ function SubmitButton({ text, customClass, onClick, type = 'button' }) {
 SubmitButton.propTypes = {
   text: PropTypes.string.isRequired,
   customClass: PropTypes.string,
+  className: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.string,
 };

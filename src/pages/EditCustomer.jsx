@@ -56,7 +56,7 @@ const EditCustomer = () => {
 
     try {
       await api.patch(`/customers/${id}`, customer);
-      navigate(`/notes/${id}`);
+      navigate(`/anotacoes/${id}`);
     } catch (err) {
       console.error('Erro ao atualizar cliente:', err);
       setError('Erro ao atualizar o cliente. Tente novamente.');
@@ -117,7 +117,7 @@ const EditCustomer = () => {
         <button type="submit" disabled={loading}>
           <BigButton icon="save" name="SALVAR" />
         </button>
-        <Link to={`/notes/${id}`}>
+        <Link to={`/anotacoes/${id}`}>
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>

@@ -88,7 +88,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Inter', sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -155,17 +155,22 @@ img {
 --------------------*/
 
 :root {
-  --lightgray: #4d4d4d;
-  --gray: #2b2b2b;
-  --darkgray: #242424;
   --white: #ffffff;
-  --mustard: #ffc612;
+  --lightgray: #c8c3c3;
+  --gray: #4d4d4d;
+  --darkgray: #2b2b2b;
+  --black: #242424;
   --yellow: #ffde80;
+  --mustard: #ffd446;
+  --lightblue: #70e5ff;
   --blue: #17a7ff;
-  --darkblue: #0c93e8;
-  --red: #ff4343;
+  --darkblue: #007dc9;
   --lightred: #ff6f6f;
+  --red: #ff4343;
+  --pink: #efaeff;
   --purple: #a53eff;
+
+  font-family: 'Inter', sans-serif;
 }
 
 * {
@@ -173,9 +178,25 @@ img {
 }
 
 body {
-  background-color: var(--gray);
+  background-color: var(--darkgray);
   color: var(--white);
 }
 label {
   color: var(--white);
+}
+
+.interBold {
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.05em;
+}
+
+.interMedium {
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0;
 }

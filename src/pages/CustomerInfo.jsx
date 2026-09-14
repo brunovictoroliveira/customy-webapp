@@ -79,10 +79,10 @@ function CustomerInfo() {
       </dl>
 
       <div className={styles.actions}>
-        <Link to={`/customers/edit/${id}`}>
+        <Link to={`/clientes/editar/${id}`}>
           <BigButton icon="save" name="EDITAR" />
         </Link>
-        <Link to={`/notes/${id}`}>
+        <Link to={`/anotacoes/${id}`}>
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>

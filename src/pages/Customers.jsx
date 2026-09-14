@@ -107,10 +107,10 @@ function Customers() {
           )}
         </div>
         <div className={styles.buttons}>
-          <Link to="/customers/new">
+          <Link to="/clientes/novo">
             <BigButton icon="newCostumer" name="NOVO CLIENTE" />
           </Link>
-          <Link to="/appointments">
+          <Link to="/agenda">
             <BigButton icon="calendar" name="AGENDA" />
           </Link>
           <SubmitButton

@@ -30,50 +30,72 @@ function Login() {
 
     try {
       login(formData);
-      navigate('/dashboard');
+      navigate('/painel');
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <section>
-      <div className={styles.loginForm}>
+    <main className={styles.container}>
+      <section className={styles.heroblock}>
         <div className={styles.logo}></div>
+        <div className="interBold">
+          <h1>
+            Aqui você <span className={styles.lightblue}>armazena </span>
+            sua lista de <span className={styles.pink}>clientes</span>, faz{' '}
+            <span className={styles.yellow}>anotações </span>e organiza sua{' '}
+            <span className={styles.lightred}>agenda</span>, tudo{' '}
+            <span className={styles.blue}>em um só lugar</span>
+          </h1>
+        </div>
+      </section>
+      <section>
+        <div className={styles.loginForm}>
+          <h1 className={'interBold'}>Já possui conta?</h1>
+          <form onSubmit={handleLogin}>
+            <Input
+              type="email"
+              text="Digite seu e-mail cadastrado"
+              name="email"
+              placeholder="email@example.com"
+              value={formData.email}
+              handleOnChange={handleChange}
+            />
 
-        <form onSubmit={handleLogin}>
-          <Input
-            type="email"
-            text="E-mail"
-            name="email"
-            placeholder="Digite seu e-mail"
-            value={formData.email}
-            handleOnChange={handleChange}
-          />
+            <Input
+              type="password"
+              text="Digite sua senha"
+              name="password"
+              placeholder=""
+              value={formData.password}
+              handleOnChange={handleChange}
+            />
 
-          <Input
-            type="password"
-            text="Senha"
-            name="password"
-            placeholder="Digite sua senha"
-            value={formData.password}
-            handleOnChange={handleChange}
-          />
+            {error && <p className={styles.error}>{error}</p>}
 
-          {error && <p className={styles.error}>{error}</p>}
+            <SubmitButton
+              text="Fazer login"
+              type="submit"
+              className="interBold"
+            />
 
-          <SubmitButton text="LOGIN" type="submit" />
-        </form>
+            <Link to="/">
+              <p className={styles.recoverPass}>Esqueci minha senha</p>
+            </Link>
+          </form>
 
-        <span>Não tem uma conta?</span>
-
-        <Link to="/signup">
-          <SubmitButton text="REGISTRE-SE" customClass="signupBtn" />
-        </Link>
-
-        <span className={styles.recoverPass}>Esqueci minha senha</span>
-      </div>
-    </section>
+          <h1 className={'interBold'}>Primeiro acesso?</h1>
+          <Link to="/cadastro">
+            <SubmitButton
+              text="Registrar-se"
+              customClass="signupBtn"
+              className="interBold"
+            />
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 }
 

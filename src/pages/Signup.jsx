@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './Login.module.css';
+import styles from './Signup.module.css';
 
 import Input from '../components/form/Input';
 import SubmitButton from '../components/form/SubmitButton';
@@ -64,73 +64,87 @@ function Signup() {
   };
 
   return (
-    <section>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
-        <div className={styles.logo}></div>
+    <main className={styles.page}>
+      <section className={styles.signupContent}>
+        <Link to="/" className={styles.logo} aria-label="Voltar para o login" />
 
-        <Input
-          type="text"
-          text="Nome ou empresa"
-          name="name"
-          placeholder="Digite seu nome ou empresa"
-          value={formData.name}
-          handleOnChange={handleChange}
-        />
+        <form className={styles.signupForm} onSubmit={handleSubmit}>
+          <h1 className="interBold">Crie sua conta</h1>
 
-        <Input
-          type="text"
-          text="CPF ou CNPJ"
-          name="document"
-          placeholder="Digite seu documento"
-          value={formData.document}
-          handleOnChange={handleChange}
-        />
+          <Input
+            type="text"
+            text="Nome ou empresa"
+            name="name"
+            placeholder="Digite seu nome ou empresa"
+            value={formData.name}
+            handleOnChange={handleChange}
+          />
 
-        <Input
-          type="email"
-          text="Digite seu e-mail"
-          name="email"
-          placeholder="example@email.com"
-          value={formData.email}
-          handleOnChange={handleChange}
-        />
+          <Input
+            type="text"
+            text="CPF ou CNPJ"
+            name="document"
+            placeholder="Digite seu documento"
+            value={formData.document}
+            handleOnChange={handleChange}
+          />
 
-        <Input
-          type="email"
-          text="Digite o e-mail novamente"
-          name="emailConfirmation"
-          placeholder="example@email.com"
-          value={formData.emailConfirmation}
-          handleOnChange={handleChange}
-        />
+          <Input
+            type="email"
+            text="Digite seu e-mail"
+            name="email"
+            placeholder="example@email.com"
+            value={formData.email}
+            handleOnChange={handleChange}
+          />
 
-        <Input
-          type="password"
-          text="Crie uma senha"
-          name="password"
-          placeholder="Digite sua senha"
-          value={formData.password}
-          handleOnChange={handleChange}
-        />
+          <Input
+            type="email"
+            text="Digite o e-mail novamente"
+            name="emailConfirmation"
+            placeholder="example@email.com"
+            value={formData.emailConfirmation}
+            handleOnChange={handleChange}
+          />
 
-        <Input
-          type="password"
-          text="Digite a senha novamente"
-          name="passwordConfirmation"
-          placeholder="Digite sua senha"
-          value={formData.passwordConfirmation}
-          handleOnChange={handleChange}
-        />
+          <Input
+            type="password"
+            text="Crie uma senha"
+            name="password"
+            placeholder="Digite sua senha"
+            value={formData.password}
+            handleOnChange={handleChange}
+          />
 
-        {error && <p className={styles.error}>{error}</p>}
+          <Input
+            type="password"
+            text="Digite a senha novamente"
+            name="passwordConfirmation"
+            placeholder="Digite sua senha"
+            value={formData.passwordConfirmation}
+            handleOnChange={handleChange}
+          />
 
-        <SubmitButton text="REGISTRAR" customClass="btn" type="submit" />
+          {error && <p className={styles.error}>{error}</p>}
 
-        <Link to="/">
-          <SubmitButton text="VOLTAR" customClass="logoffBtn" />
-        </Link>
-      </form>
-    </section>
+          <div className={styles.actions}>
+            <Link to="/">
+              <SubmitButton
+                text="Voltar"
+                customClass="logoffBtn"
+                className="interBold"
+              />
+            </Link>
+            <SubmitButton
+              text="Registrar"
+              customClass="btn"
+              className="interBold"
+              type="submit"
+            />
+          </div>
+        </form>
+      </section>
+    </main>
   );
 }
 

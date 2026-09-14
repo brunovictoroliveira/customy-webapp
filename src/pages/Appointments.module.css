@@ -29,7 +29,7 @@
 .select {
   width: 310px;
   height: 57px;
-  font-family: "Roboto Slab", serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   background-color: var(--darkgray);
   color: var(--yellow);

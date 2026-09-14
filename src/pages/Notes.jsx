@@ -87,7 +87,7 @@ function Notes() {
         <div className={styles.header}>
           <h1 className={styles.customerName}>{customer.name}</h1>
           <div className={styles.customerActions}>
-            <Link to={`/customers/${id}/info`}>
+            <Link to={`/clientes/${id}/informacoes`}>
               <SubmitButton
                 text="INFORMAÇÕES DO CLIENTE"
                 customClass="customerInfoBtn"
@@ -111,7 +111,7 @@ function Notes() {
                     String(currentId) === String(note.id) ? null : note.id,
                   )
                 }
-                onEdit={() => navigate(`/notes/${id}/edit/${note.id}`)}
+                onEdit={() => navigate(`/anotacoes/${id}/editar/${note.id}`)}
                 onDelete={() => setNoteToDelete(note)}
               />
             ))
@@ -121,10 +121,10 @@ function Notes() {
         </div>
 
         <div className={styles.pageActions}>
-          <Link to={`/notes/${id}/new`}>
+          <Link to={`/anotacoes/${id}/nova`}>
             <BigButton icon="newNote" name="NOVA ANOTAÇÃO" />
           </Link>
-          <Link to="/customers">
+          <Link to="/clientes">
             <SubmitButton text="VOLTAR" customClass="logoffBtn" />
           </Link>
         </div>

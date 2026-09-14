@@ -34,7 +34,7 @@ const NewCustomer = () => {
 
     try {
       await api.post('/customers', customer);
-      navigate('/customers');
+      navigate('/clientes');
     } catch (err) {
       console.error('Erro ao criar cliente:', err);
       setError('Erro ao criar cliente. Tente novamente.');
@@ -89,7 +89,7 @@ const NewCustomer = () => {
         <button type="submit">
           <BigButton icon="save" name="SALVAR" />
         </button>
-        <Link to="/customers">
+        <Link to="/clientes">
           <SubmitButton text="VOLTAR" customClass="logoffBtn" />
         </Link>
       </div>

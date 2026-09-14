@@ -1,37 +1,36 @@
-.form_control {
+.fieldGroup {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 }
 
-.form_control label {
-  margin-bottom: 10px;
+.label {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  color: var(--lightgray);
 }
 
-.form_control input,
-.form_control textarea {
-  width: 310px;
-  height: 57px;
-  font-family: "Roboto Slab", serif;
-  font-size: 1.3rem;
+.control {
+  width: 350px;
+  height: 52px;
+  font-size: 1rem;
   background-color: var(--darkgray);
-  color: var(--yellow);
+  color: var(--white);
   padding-left: 10px;
   line-height: 1.5;
-  border-radius: 5px;
+  border-radius: 20px;
   border: 1px solid;
-  border-color: var(--yellow);
+  border-color: var(--gray);
   outline: none;
 }
 
-.form_control textarea {
+.control:focus {
+  border-color: var(--yellow);
+}
+
+.textarea {
   min-height: 170px;
   padding-top: 10px;
   resize: vertical;
   line-height: 1.7;
-}
-
-.form_control input:focus,
-.form_control textarea:focus {
-  border-color: var(--mustard);
 }

@@ -1,5 +1,21 @@
+.heroblock {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 450px;
+  height: 600px;
+  font-size: 3.2rem;
+  gap: 35px;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 80px;
+}
 .logo {
-  background-image: url("../assets/logos/logo_customy_white.png");
+  background-image: url('../assets/logos/logo_customy_white.png');
   background-size: 150px;
   width: 150px;
   height: 150px;
@@ -12,21 +28,133 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
+
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 40px;
 }
 
-.loginForm span {
-  font-size: 1.1rem;
+.loginForm > h1 {
+  font-size: 2.8rem;
 }
 
 .loginForm .recoverPass {
-  text-decoration: underline;
   cursor: pointer;
-  color: var(--yellow);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 1rem;
 }
 
 .error {
   color: var(--lightred);
   max-width: 310px;
   text-align: center;
+  padding-bottom: 10px;
+}
+
+.lightblue {
+  color: var(--lightblue);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.lightred {
+  color: var(--lightred);
+}
+
+.pink {
+  color: var(--pink);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    gap: 48px;
+    padding: 70px 24px 60px;
+  }
+
+  .heroblock {
+    width: min(100%, 760px);
+    height: auto;
+    gap: 24px;
+    font-size: clamp(2.25rem, 5vw, 3.2rem);
+    text-align: center;
+  }
+
+  .logo {
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    padding-bottom: 0;
+  }
+
+  .container > section:last-child {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .loginForm {
+    width: min(100%, 480px);
+    gap: 1.5rem;
+    padding: clamp(24px, 5vw, 40px);
+  }
+
+  .loginForm > h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    text-align: center;
+  }
+
+  .loginForm form,
+  .loginForm > a {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .loginForm form > div,
+  .loginForm input,
+  .loginForm textarea,
+  .loginForm button {
+    width: 100%;
+  }
+
+  .loginForm form > a {
+    display: block;
+    text-align: center;
+  }
+}
+
+@media (max-width: 956px) {
+  .container {
+    justify-content: flex-start;
+    gap: clamp(40px, 6vw, 56px);
+    padding: clamp(40px, 7vh, 64px) 20px clamp(48px, 8vh, 72px);
+  }
+
+  .heroblock {
+    width: min(100%, 680px);
+    font-size: clamp(2rem, 5.5vw, 2.75rem);
+  }
+
+  .logo {
+    width: 110px;
+    height: 110px;
+  }
+
+  .loginForm {
+    width: min(100%, 440px);
+    padding: clamp(24px, 4vw, 36px);
+  }
 }

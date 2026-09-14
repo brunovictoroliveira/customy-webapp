@@ -20,34 +20,31 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={protectedPage(<Dashboard />)} />
-          <Route path="/customers" element={protectedPage(<Customers />)} />
+          <Route path="/cadastro" element={<Signup />} />
+          <Route path="/painel" element={protectedPage(<Dashboard />)} />
+          <Route path="/clientes" element={protectedPage(<Customers />)} />
           <Route
-            path="/customers/new"
+            path="/clientes/novo"
             element={protectedPage(<NewCustomer />)}
           />
           <Route
-            path="/customers/edit/:id"
+            path="/clientes/editar/:id"
             element={protectedPage(<EditCustomer />)}
           />
           <Route
-            path="/customers/:id/info"
+            path="/clientes/:id/informacoes"
             element={protectedPage(<CustomerInfo />)}
           />
-          <Route path="/notes/:id" element={protectedPage(<Notes />)} />
+          <Route path="/anotacoes/:id" element={protectedPage(<Notes />)} />
           <Route
-            path="/notes/:customerId/new"
+            path="/anotacoes/:customerId/nova"
             element={protectedPage(<NewNote />)}
           />
           <Route
-            path="/notes/:customerId/edit/:noteId"
+            path="/anotacoes/:customerId/editar/:noteId"
             element={protectedPage(<NewNote />)}
           />
-          <Route
-            path="/appointments"
-            element={protectedPage(<Appointments />)}
-          />
+          <Route path="/agenda" element={protectedPage(<Appointments />)} />
         </Routes>
       </Container>
     </BrowserRouter>

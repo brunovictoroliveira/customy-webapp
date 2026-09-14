@@ -11,22 +11,30 @@ const Input = ({
   customClass = '',
   ...rest
 }) => {
+  const { className = '', ...inputProps } = rest;
+  const controlClassName = `${styles.control} ${className}`.trim();
+
   const fieldProps = {
     name,
     id: name,
     placeholder,
     value,
     onChange: handleOnChange,
-    ...rest,
+    ...inputProps,
   };
 
   return (
-    <div className={`${styles.form_control} ${customClass}`}>
-      <label htmlFor={name}>{text}</label>
+    <div className={`${styles.fieldGroup} ${customClass}`.trim()}>
+      <label className={styles.label} htmlFor={name}>
+        {text}
+      </label>
       {type === 'textarea' ? (
-        <textarea {...fieldProps} />
+        <textarea
+          className={`${controlClassName} ${styles.textarea}`}
+          {...fieldProps}
+        />
       ) : (
-        <input type={type} {...fieldProps} />
+        <input className={controlClassName} type={type} {...fieldProps} />
       )}
     </div>
   );

@@ -7,11 +7,11 @@ function Customer({ id, name, onDelete }) {
   return (
     <div className={styles.container_inline}>
       <div className={styles.bar}>
-        <Link to={`/notes/${id}`} className={styles.name}>
+        <Link to={`/anotacoes/${id}`} className={styles.name}>
           {name}
         </Link>
         <div className={styles.buttons}>
-          <Link to={`/customers/edit/${id}`}>
+          <Link to={`/clientes/editar/${id}`}>
             <Button type="EditButton" title="Editar cliente" />
           </Link>
           <Button
