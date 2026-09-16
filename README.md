@@ -1,90 +1,139 @@
-# Customy Webapp
+# Customy Web App
 
-Aplicacao React + Vite para gerenciamento de clientes, anotacoes e agenda.
+Aplicação web para gerenciamento de clientes, anotações e compromissos, desenvolvida com React e Vite.
 
-## Onde paramos
+O projeto explora a construção de uma interface de gerenciamento integrada a uma API REST, permitindo organizar informações de clientes e atividades relacionadas em um único ambiente.
 
-- A interface ainda usa autenticacao simulada no localStorage.
-- As telas consomem a API em http://localhost:5000.
-- O caminho mais rapido para continuar o desenvolvimento e usar o mock com json-server.
-- O backend Express com MongoDB/Mongoose ja esta preparado, mas o mock segue preservado para testes rapidos.
+## Funcionalidades
 
-## Como rodar o projeto
+O Customy Web App permite:
 
-### 1. Instale as dependencias
+- cadastrar e gerenciar clientes;
+- criar e organizar anotações;
+- registrar e acompanhar compromissos;
+- consultar informações através de uma interface centralizada;
+- persistir dados através de uma API REST.
 
-~~~bash
+## Arquitetura
+
+A aplicação é dividida entre frontend e backend:
+
+```text
+Frontend
+   ↓
+React + Vite
+   ↓
+API REST
+   ↓
+Express
+   ↓
+MongoDB
+```
+
+Durante o desenvolvimento, também é possível utilizar uma API mock para executar e testar o frontend sem depender de uma instância do banco de dados.
+
+## Tecnologias
+
+Entre as principais tecnologias utilizadas no projeto estão:
+
+### Frontend
+
+- React;
+- Vite;
+- JavaScript;
+- CSS.
+
+### Backend
+
+- Node.js;
+- Express;
+- MongoDB;
+- Mongoose.
+
+### Desenvolvimento
+
+- JSON Server;
+- ESLint;
+- npm.
+
+## Desenvolvimento
+
+Instale as dependências:
+
+```bash
 npm install
-~~~
+```
 
-### 2. Suba o back end
+### Ambiente com API mock
 
-Para desenvolvimento rapido, use a API mock com json-server. Ela usa os dados de backend/db.json e roda em http://localhost:5000.
+Para desenvolvimento e testes rápidos do frontend, o projeto possui uma API mock:
 
-~~~bash
+```bash
 npm run server:mock
-~~~
+```
 
-Endpoints principais do mock:
+Em outro terminal, inicie o frontend:
 
-~~~text
-http://localhost:5000/customers
-http://localhost:5000/notes
-http://localhost:5000/appointments
-~~~
-
-### 3. Suba o front end
-
-Em outro terminal, rode:
-
-~~~bash
+```bash
 npm run dev
-~~~
+```
 
-Abra a URL informada pelo Vite. Neste projeto, a porta configurada e:
+A URL utilizada pelo ambiente de desenvolvimento será informada pelo Vite no terminal.
 
-~~~text
-http://localhost:4000
-~~~
+## Backend com MongoDB
 
-Acesso de teste da interface:
+O projeto também possui uma API desenvolvida com Express e MongoDB.
 
-~~~text
-E-mail: teste@email.com
-Senha: 123456
-~~~
+Para configurar o ambiente local, utilize o arquivo `.env.example` como referência para criar seu próprio `.env`.
 
-## Opcional: API real com MongoDB
+As variáveis de ambiente e credenciais necessárias para executar os serviços externos devem ser configuradas localmente e não devem ser adicionadas ao repositório.
 
-Se quiser usar o backend Express com MongoDB em vez do mock, crie o arquivo .env:
+Com o ambiente configurado, a API pode ser iniciada com:
 
-~~~bash
-copy .env.example .env
-~~~
-
-Inicie um MongoDB local ou ajuste MONGODB_URI no .env.
-
-Se quiser importar os dados iniciais:
-
-~~~bash
-npm run db:seed
-~~~
-
-Suba a API real:
-
-~~~bash
+```bash
 npm run server
-~~~
+```
 
-Depois, em outro terminal, suba o frontend:
+O projeto também possui um script para popular o ambiente de desenvolvimento com dados iniciais:
 
-~~~bash
-npm run dev
-~~~
+```bash
+npm run db:seed
+```
 
-## Validacao
+## Validação
 
-~~~bash
+Para verificar a qualidade do código:
+
+```bash
 npm run lint
+```
+
+Para gerar uma build de produção:
+
+```bash
 npm run build
-~~~
+```
+
+## Status do projeto
+
+O projeto possui suporte tanto para uma API mock utilizada durante o desenvolvimento quanto para integração com uma API Express e MongoDB.
+
+Algumas funcionalidades podem utilizar implementações simplificadas para fins de demonstração e desenvolvimento.
+
+## Segurança
+
+Arquivos contendo variáveis de ambiente, credenciais ou outras informações sensíveis não devem ser versionados.
+
+Utilize `.env.example` apenas como referência para as variáveis necessárias e mantenha os valores reais exclusivamente no ambiente local ou na plataforma utilizada para deploy.
+
+## License
+
+Este projeto é um software proprietário.
+
+O código-fonte está disponível publicamente apenas para fins de portfólio, análise educacional e avaliação.
+
+Não é concedida permissão para copiar, modificar, distribuir, sublicenciar, vender ou utilizar este software ou qualquer parte de seu código-fonte sem autorização expressa do autor.
+
+Consulte o arquivo [LICENSE](./LICENSE) para obter detalhes.
+
+Copyright © 2026 Bruno Victor. Todos os direitos reservados.
