@@ -126,15 +126,22 @@
 }
 .sidebarAppointment {
   display: grid;
-  grid-template-columns: 9px 1fr;
+  grid-template-columns: 9px minmax(0, 1fr) auto;
   gap: 6px;
   margin-bottom: 13px;
   font-size: 13px;
   line-height: 1.2;
+}
+.sidebarAppointmentInfo {
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
   cursor: pointer;
 }
-.sidebarAppointment:hover,
-.sidebarAppointment:focus-visible {
+.sidebarAppointmentInfo:hover,
+.sidebarAppointmentInfo:focus-visible {
   border-radius: 4px;
   outline: 2px solid rgb(23 167 255/60%);
   outline-offset: 3px;
@@ -151,6 +158,9 @@
 .sidebarAppointment p {
   margin-top: 1px;
   color: #fff;
+}
+.sidebarActions {
+  display: none;
 }
 .sidebarEmpty {
   color: #aaa;
@@ -739,20 +749,56 @@
 }
 @media (max-width: 900px) {
   .page {
-    position: relative;
+    position: fixed;
+    inset: 0;
     width: 100%;
-    height: auto;
     min-width: 0;
-    min-height: 100vh;
-    overflow: visible;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+    background: #242424;
+    height: 100dvh;
   }
   .workspace {
     display: block;
-    height: calc(100dvh - 52px);
+    min-height: 0;
+    flex: 1;
   }
   .sidebar {
     height: 100%;
     display: flex;
+  }
+  .sidebarActions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .editAppointmentButton,
+  .deleteAppointmentButton {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .editAppointmentButton {
+    background: #17a7ff;
+  }
+  .deleteAppointmentButton {
+    background: #e43d52;
+  }
+  .editAppointmentButton img,
+  .deleteAppointmentButton img {
+    width: 16px;
+    height: 16px;
+  }
+  .editAppointmentButton img {
+    filter: brightness(0) invert(1);
+  }
+  .deleteAppointmentButton img {
+    filter: brightness(0) invert(1);
   }
   .calendarArea {
     display: contents;

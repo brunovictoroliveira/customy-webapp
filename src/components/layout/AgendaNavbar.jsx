@@ -62,9 +62,9 @@ function AgendaNavbar() {
 
       <button
         type="button"
-        className={styles.menuButton}
+        className={`${styles.menuButton} ${menuOpen ? styles.menuOpen : ''}`}
         onClick={() => setMenuOpen((current) => !current)}
-        aria-label="Abrir menu"
+        aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
         aria-expanded={menuOpen}
         aria-controls="agenda-mobile-menu"
       >

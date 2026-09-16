@@ -8,6 +8,7 @@ import arrowLeft from '../assets/icons/arrow-left-s-line.svg';
 import arrowRight from '../assets/icons/arrow-right-s-line.svg';
 import pencilIcon from '../assets/icons/pencil-line.svg';
 import searchIcon from '../assets/icons/search-line.svg';
+import deleteIcon from '../assets/icons/delete_icon.svg';
 
 const WEEK_DAYS = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
 const WEEK_DAYS_LONG = [
@@ -178,7 +179,24 @@ function MiniCalendar({
   );
 }
 
-function AppointmentList({ appointments, onDoubleClick }) {
+function AppointmentList({ appointments, onDoubleClick, onEdit, onDelete }) {
+  const lastTouchRef = useRef({ appointmentId: null, timestamp: 0 });
+  const handleTouchEnd = (event, appointment) => {
+    const now = Date.now();
+    const lastTouch = lastTouchRef.current;
+
+    if (
+      lastTouch.appointmentId === appointment.id &&
+      now - lastTouch.timestamp < 350
+    ) {
+      event.preventDefault();
+      lastTouchRef.current = { appointmentId: null, timestamp: 0 };
+      onDoubleClick(appointment);
+      return;
+    }
+
+    lastTouchRef.current = { appointmentId: appointment.id, timestamp: now };
+  };
   const grouped = appointments.reduce((groups, appointment, index) => {
     const item = { ...appointment, colorConfig: getColor(appointment, index) };
     groups[item.date] = [...(groups[item.date] || []), item];
@@ -200,29 +218,48 @@ function AppointmentList({ appointments, onDoubleClick }) {
                 <span>{formatDate(date)}</span>
               </h2>
               {items.map((appointment) => (
-                <div
-                  className={styles.sidebarAppointment}
-                  key={appointment.id}
-                  role="button"
-                  tabIndex={0}
-                  onDoubleClick={() => onDoubleClick(appointment)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      onDoubleClick(appointment);
-                    }
-                  }}
-                  title="Dê dois cliques para ver os detalhes"
-                >
+                <div className={styles.sidebarAppointment} key={appointment.id}>
                   <i
                     style={{ backgroundColor: appointment.colorConfig.value }}
                   />
-                  <div>
+                  <button
+                    type="button"
+                    className={styles.sidebarAppointmentInfo}
+                    onDoubleClick={() => onDoubleClick(appointment)}
+                    onTouchEnd={(event) => handleTouchEnd(event, appointment)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        onDoubleClick(appointment);
+                      }
+                    }}
+                    title="Dê dois cliques ou dois toques para ver os detalhes"
+                  >
                     <time>
                       {displayTime(appointment.time)} -{' '}
                       {displayTime(appointment.endTime)}
                     </time>
                     <p>{appointment.description || 'Compromisso'}</p>
+                  </button>
+                  <div className={styles.sidebarActions}>
+                    <button
+                      type="button"
+                      className={styles.editAppointmentButton}
+                      onClick={() => onEdit(appointment)}
+                      aria-label={`Editar ${appointment.description || 'compromisso'}`}
+                      title="Editar compromisso"
+                    >
+                      <img src={pencilIcon} alt="" />
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.deleteAppointmentButton}
+                      onClick={() => onDelete(appointment)}
+                      aria-label={`Remover ${appointment.description || 'compromisso'}`}
+                      title="Remover compromisso"
+                    >
+                      <img src={deleteIcon} alt="" />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -654,6 +691,19 @@ function DeleteModal({ appointment, onCancel, onConfirm, deleting }) {
 
 function AppointmentDetailsModal({ appointment, customer, onClose }) {
   const color = getColor(appointment);
+  const lastTouchRef = useRef(0);
+  const handleTouchEnd = (event) => {
+    const now = Date.now();
+
+    if (now - lastTouchRef.current < 350) {
+      event.preventDefault();
+      lastTouchRef.current = 0;
+      onClose();
+      return;
+    }
+
+    lastTouchRef.current = now;
+  };
 
   return (
     <div
@@ -668,6 +718,7 @@ function AppointmentDetailsModal({ appointment, customer, onClose }) {
         aria-labelledby="appointment-details-title"
         onMouseDown={(event) => event.stopPropagation()}
         onDoubleClick={onClose}
+        onTouchEnd={handleTouchEnd}
       >
         <span
           className={styles.detailsAccent}
@@ -835,6 +886,7 @@ function Appointments() {
   };
   const openEditModal = (appointment) => {
     setModalError('');
+    setDetailsAppointment(null);
     setModalAppointment({
       ...appointment,
       customerId: appointment.customerId ? String(appointment.customerId) : '',
@@ -909,6 +961,10 @@ function Appointments() {
     setContextMenu(null);
     setDetailsAppointment(appointment);
   };
+  const openDeleteModal = (appointment) => {
+    setDetailsAppointment(null);
+    setAppointmentToDelete(appointment);
+  };
 
   return (
     <main className={styles.page}>
@@ -926,6 +982,8 @@ function Appointments() {
           <AppointmentList
             appointments={appointments}
             onDoubleClick={openDetailsModal}
+            onEdit={openEditModal}
+            onDelete={openDeleteModal}
           />
         </aside>
         <section className={styles.calendarArea}>
@@ -1099,6 +1157,8 @@ MiniCalendar.propTypes = {
 AppointmentList.propTypes = {
   appointments: PropTypes.arrayOf(appointmentShape).isRequired,
   onDoubleClick: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 CalendarEvent.propTypes = {

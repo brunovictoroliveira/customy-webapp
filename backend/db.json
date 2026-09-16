@@ -188,14 +188,14 @@
   ],
   "appointments": [
     {
-      "id": "3f0a",
       "customerId": null,
       "date": "2026-09-16",
       "time": "08:00",
       "endTime": "08:30",
       "description": "Daily com o time",
       "color": "#24b7f2",
-      "status": "scheduled"
+      "status": "scheduled",
+      "id": "3f0a"
     },
     {
       "id": "b404",

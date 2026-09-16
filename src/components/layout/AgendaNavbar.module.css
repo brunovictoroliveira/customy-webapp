@@ -20,9 +20,11 @@
 
 .nav {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
+  width: max-content;
   height: 100%;
-  transform: translateX(-50%);
+  margin-inline: auto;
 }
 
 .logoLink {
@@ -34,7 +36,8 @@
 .logoLink img {
   display: block;
   width: 96px;
-  height: 36px;
+  height: auto;
+  object-fit: contain;
   image-rendering: auto;
 }
 
@@ -99,8 +102,10 @@
 
   .nav {
     position: static;
+    width: auto;
     height: auto;
     display: block;
+    margin: 0;
     transform: none;
   }
 
@@ -117,16 +122,15 @@
 
   .logoLink img {
     width: 82px;
-    height: 30px;
+    height: auto;
   }
 
   .menuButton {
+    position: relative;
     width: 38px;
     height: 38px;
-    display: grid;
-    align-content: center;
-    gap: 5px;
-    padding: 0 8px;
+    display: block;
+    padding: 0;
     border-radius: 5px;
     background: transparent;
     cursor: pointer;
@@ -138,20 +142,49 @@
   }
 
   .menuButton span {
-    width: 100%;
+    position: absolute;
+    left: 8px;
+    width: 22px;
     height: 2px;
     border-radius: 2px;
     background: #fff;
+    transition:
+      transform 180ms ease,
+      opacity 140ms ease;
+  }
+
+  .menuButton span:nth-child(1) {
+    top: 12px;
+  }
+
+  .menuButton span:nth-child(2) {
+    top: 18px;
+  }
+
+  .menuButton span:nth-child(3) {
+    top: 24px;
+  }
+
+  .menuOpen span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menuOpen span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menuOpen span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   .mobileMenu {
     position: absolute;
     top: calc(100% - 3px);
-    right: 12px;
+    right: 10px;
     z-index: 5;
-    width: 190px;
+    width: 70vw;
     display: grid;
-    padding: 7px;
+    padding: 12px;
     border-radius: 7px;
     background: #242424;
     box-shadow: 0 7px 20px rgb(0 0 0/28%);
@@ -159,13 +192,13 @@
 
   .mobileMenu a,
   .mobileLogout {
-    min-height: 40px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     padding: 0 10px;
     border-radius: 4px;
     color: #fff;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
   }
 
@@ -175,15 +208,23 @@
   }
 
   .mobileLogout {
+    height: 60px;
+    min-height: 0;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-top: 3px;
+    margin-top: 12px;
+    padding: 16px 10px 0;
     border-top: 1px solid #4f4f4f;
     color: #ffde80;
   }
 
+  .mobileLogout > span {
+    align-self: center;
+  }
+
   .mobileLogout button {
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
     display: grid;
     place-items: center;
     padding: 0;
@@ -193,8 +234,8 @@
   }
 
   .mobileLogout img {
-    width: 17px;
-    height: 17px;
+    width: 21px;
+    height: 21px;
     filter: brightness(0) invert(1);
   }
 }
