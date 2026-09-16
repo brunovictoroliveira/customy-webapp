@@ -18,7 +18,7 @@ const appointmentSchema = new mongoose.Schema(
     customerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Customer",
-      required: [true, "Customer is required."],
+      default: null,
       index: true,
     },
     date: {
@@ -31,11 +31,24 @@ const appointmentSchema = new mongoose.Schema(
       required: [true, "Appointment time is required."],
       match: [/^([01]\d|2[0-3]):[0-5]\d$/, "Appointment time is invalid."],
     },
+    endTime: {
+      type: String,
+      required: [true, "Appointment end time is required."],
+      match: [
+        /^([01]\d|2[0-3]):[0-5]\d$/,
+        "Appointment end time is invalid.",
+      ],
+    },
     description: {
       type: String,
       trim: true,
       maxlength: 5000,
       default: "",
+    },
+    color: {
+      type: String,
+      match: [/^#[0-9a-fA-F]{6}$/, "Appointment color is invalid."],
+      default: "#24b7f2",
     },
     status: {
       type: String,

@@ -188,25 +188,104 @@
   ],
   "appointments": [
     {
-      "id": "1",
-      "customerId": "1",
-      "date": "2025-04-25",
-      "time": "09:00",
-      "description": "Atendimento inicial cadastrado como exemplo."
-    },
-    {
-      "id": "2",
-      "customerId": "3",
-      "date": "2025-04-25",
-      "time": "14:30",
-      "description": "Retorno para acompanhamento."
-    },
-    {
-      "id": "4975",
-      "customerId": "1",
-      "date": "2026-09-15",
+      "id": "3f0a",
+      "customerId": null,
+      "date": "2026-09-16",
       "time": "08:00",
-      "description": "teste"
+      "endTime": "08:30",
+      "description": "Daily com o time",
+      "color": "#24b7f2",
+      "status": "scheduled"
+    },
+    {
+      "id": "b404",
+      "customerId": null,
+      "date": "2026-09-16",
+      "time": "09:00",
+      "endTime": "10:00",
+      "description": "Revisão de pull requests",
+      "color": "#ff174f",
+      "status": "scheduled"
+    },
+    {
+      "customerId": "1",
+      "date": "2026-09-16",
+      "time": "10:30",
+      "endTime": "12:00",
+      "description": "Desenvolvimento da tela de agenda",
+      "color": "#24e99a",
+      "status": "scheduled",
+      "id": "3fc2"
+    },
+    {
+      "id": "c689",
+      "customerId": null,
+      "date": "2026-09-16",
+      "time": "14:00",
+      "endTime": "16:00",
+      "description": "Correção de bugs do frontend",
+      "color": "#9847ef",
+      "status": "scheduled"
+    },
+    {
+      "id": "f7fe",
+      "customerId": null,
+      "date": "2026-09-17",
+      "time": "08:30",
+      "endTime": "09:30",
+      "description": "Planejamento da sprint",
+      "color": "#ff7a00",
+      "status": "scheduled"
+    },
+    {
+      "id": "d063",
+      "customerId": null,
+      "date": "2026-09-17",
+      "time": "10:00",
+      "endTime": "12:00",
+      "description": "Implementação da API de agendamentos",
+      "color": "#24b7f2",
+      "status": "scheduled"
+    },
+    {
+      "id": "8d99",
+      "customerId": null,
+      "date": "2026-09-17",
+      "time": "14:30",
+      "endTime": "16:00",
+      "description": "Pair programming com o backend",
+      "color": "#24e99a",
+      "status": "scheduled"
+    },
+    {
+      "id": "fff1",
+      "customerId": null,
+      "date": "2026-09-18",
+      "time": "09:00",
+      "endTime": "11:00",
+      "description": "Criação de testes automatizados",
+      "color": "#ff174f",
+      "status": "scheduled"
+    },
+    {
+      "id": "f66f",
+      "customerId": null,
+      "date": "2026-09-18",
+      "time": "13:30",
+      "endTime": "15:30",
+      "description": "Refatoração do módulo de clientes",
+      "color": "#ffd446",
+      "status": "scheduled"
+    },
+    {
+      "id": "f41d",
+      "customerId": null,
+      "date": "2026-09-19",
+      "time": "09:00",
+      "endTime": "11:30",
+      "description": "Estudo de React e arquitetura frontend",
+      "color": "#24e99a",
+      "status": "scheduled"
     }
   ]
 }

@@ -30,7 +30,7 @@ function Login() {
 
     try {
       login(formData);
-      navigate('/painel');
+      navigate('/agenda');
     } catch (err) {
       setError(err.message);
     }

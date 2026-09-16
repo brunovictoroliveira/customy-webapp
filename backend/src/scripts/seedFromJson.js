@@ -86,9 +86,11 @@ const seed = async () => {
   }
 
   for (const item of data.appointments || []) {
-    const customerId = customerIdMap.get(String(item.customerId));
+    const customerId = item.customerId
+      ? customerIdMap.get(String(item.customerId))
+      : null;
 
-    if (!customerId) {
+    if (item.customerId && !customerId) {
       continue;
     }
 
@@ -98,7 +100,9 @@ const seed = async () => {
       customerId,
       date: parseDateOnly(item.date),
       time: item.time,
+      endTime: item.endTime || item.time,
       description: item.description || "",
+      color: item.color || "#24b7f2",
       status: item.status || "scheduled",
     });
   }

@@ -6,10 +6,12 @@ import { dateOnlyRange, parseDateOnly } from "../utils/date.js";
 import { HttpError } from "../utils/httpError.js";
 
 const appointmentPayload = (body) => ({
-  customerId: body.customerId,
+  customerId: body.customerId || null,
   date: parseDateOnly(body.date),
   time: body.time,
+  endTime: body.endTime || body.time,
   description: body.description || "",
+  color: body.color || "#24b7f2",
   status: body.status || "scheduled",
 });
 
@@ -50,13 +52,15 @@ export const getAppointment = asyncHandler(async (req, res) => {
 });
 
 export const createAppointment = asyncHandler(async (req, res) => {
-  const customer = await Customer.findOne({
-    _id: req.body.customerId,
-    deletedAt: null,
-  });
+  if (req.body.customerId) {
+    const customer = await Customer.findOne({
+      _id: req.body.customerId,
+      deletedAt: null,
+    });
 
-  if (!customer) {
-    throw new HttpError(404, "Customer not found.");
+    if (!customer) {
+      throw new HttpError(404, "Customer not found.");
+    }
   }
 
   const appointment = await Appointment.create(appointmentPayload(req.body));

@@ -1,0 +1,206 @@
+.header {
+  flex: 0 0 60px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 0 clamp(21px, 2.6vw, 51px);
+  background: #4d4d4d;
+  color: #fff;
+  position: relative;
+  z-index: 30;
+}
+
+.nav,
+.account {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  position: absolute;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.logoLink img {
+  display: block;
+  width: 96px;
+  height: 36px;
+  image-rendering: auto;
+}
+
+.link {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 21px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.active {
+  background: #242424;
+}
+
+.account {
+  margin-left: auto;
+  gap: 14px;
+  color: #ffde80;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.account strong {
+  font-weight: 700;
+}
+
+.account button {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  background: #17a7ff;
+  cursor: pointer;
+}
+
+.account button:hover,
+.account button:focus-visible {
+  background: #007dc9;
+}
+
+.account img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) invert(1);
+}
+.menuButton,
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .header {
+    height: 52px;
+    flex-basis: 52px;
+    padding: 0 16px;
+    align-items: center;
+  }
+
+  .nav {
+    position: static;
+    height: auto;
+    display: block;
+    transform: none;
+  }
+
+  .nav .link,
+  .account {
+    display: none;
+  }
+
+  .logoLink {
+    position: static;
+    transform: none;
+    padding: 0;
+  }
+
+  .logoLink img {
+    width: 82px;
+    height: 30px;
+  }
+
+  .menuButton {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+    padding: 0 8px;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .menuButton:hover,
+  .menuButton:focus-visible {
+    background: rgb(255 255 255/12%);
+  }
+
+  .menuButton span {
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: calc(100% - 3px);
+    right: 12px;
+    z-index: 5;
+    width: 190px;
+    display: grid;
+    padding: 7px;
+    border-radius: 7px;
+    background: #242424;
+    box-shadow: 0 7px 20px rgb(0 0 0/28%);
+  }
+
+  .mobileMenu a,
+  .mobileLogout {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .mobileMenu a:hover,
+  .mobileMenu a:focus-visible {
+    background: #3d3d3d;
+  }
+
+  .mobileLogout {
+    justify-content: space-between;
+    margin-top: 3px;
+    border-top: 1px solid #4f4f4f;
+    color: #ffde80;
+  }
+
+  .mobileLogout button {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border-radius: 50%;
+    background: #17a7ff;
+    cursor: pointer;
+  }
+
+  .mobileLogout img {
+    width: 17px;
+    height: 17px;
+    filter: brightness(0) invert(1);
+  }
+}
+
+@media (max-width: 680px) {
+  .header {
+    padding-inline: 12px;
+  }
+}
