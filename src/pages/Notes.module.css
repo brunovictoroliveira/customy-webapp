@@ -1,63 +1,231 @@
-.centralize {
+.page {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 88vh;
+  overflow: hidden;
+  background: var(--darkgray);
+}
+
+.main {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+}
+
+.centralize {
+  width: min(1320px, calc(100% - 160px));
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 46px 0 128px;
 }
 
 .header {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px 32px;
 }
 
 .customerName {
-  font-size: 2rem;
   color: var(--yellow);
-  padding-left: 2.5rem;
-  padding-bottom: 1.2rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 1.15;
 }
 
 .customerActions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding-left: 2.5rem;
-  padding-bottom: 0.4rem;
+}
+
+.customerActions button,
+.pageActions > a:first-child button {
+  width: 230px;
 }
 
 .title {
-  background-color: var(--darkgray);
-  width: 100%;
-  padding: 0.5rem 0 0.5rem 2.5rem;
-  font-size: 1.6rem;
-  margin: 0.6rem 0 1rem;
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  color: var(--lightgray);
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 .notesList {
-  background-color: var(--lightgray);
-  height: 48vh;
-  width: 100vw;
-  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 26px;
+  width: 100%;
+  margin-top: 26px;
+}
 
-  /* implementação de rolagem */
-  overflow-y: auto;
-  overflow-x: hidden;
+.noNotes {
+  grid-column: 1 / -1;
 }
 
 .pageActions {
+  position: fixed;
+  right: max(80px, calc((100vw - 1320px) / 2));
+  bottom: 40px;
+  z-index: 5;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem 0 1rem;
+  gap: 14px;
 }
 
+.pageActions > a:last-child > div {
+  width: 230px;
+}
+
+.pageActions > a:last-child > div span {
+  font-size: 1rem;
+}
+
+.errorState,
 .error,
 .loading,
 .noNotes {
   color: var(--yellow);
-  padding: 1rem 2.5rem;
   text-align: center;
+}
+
+.errorState,
+.loading {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Tablet */
+@media (min-width: 681px) and (max-width: 1024px) {
+  .centralize {
+    width: min(900px, calc(100% - 64px));
+    padding: 40px 0 120px;
+  }
+
+  .customerName {
+    font-size: 2.2rem;
+  }
+
+  .notesList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 22px;
+  }
+
+  .pageActions {
+    right: max(32px, calc((100vw - 900px) / 2));
+    bottom: 32px;
+  }
+}
+
+/* Mobile: preserva a diagramação original da página de anotações. */
+@media (max-width: 680px) {
+  .main {
+    overflow-x: hidden;
+  }
+
+  .centralize {
+    width: 100%;
+    height: calc(100dvh - 52px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0 0;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .customerName {
+    padding: 0 2.5rem 1.2rem;
+    font-size: 2rem;
+    font-weight: 400;
+  }
+
+  .customerActions {
+    padding: 0 0 0.4rem 2.5rem;
+  }
+
+  .title {
+    width: 100%;
+    margin: 0.6rem 0 1rem;
+    padding: 0.5rem 0 0.5rem 2.5rem;
+    background-color: var(--darkgray);
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+
+  .notesList {
+    min-height: 0;
+    height: 48vh;
+    flex: 0 1 48vh;
+    display: block;
+    width: 100vw;
+    margin: 0;
+    padding: 0 2.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--lightgray);
+  }
+
+  .pageActions {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0.8rem 0 1rem;
+  }
+
+  .pageActions > a:first-child button {
+    width: min(310px, calc(100vw - 32px));
+  }
+
+  .pageActions > a:last-child > div {
+    width: min(310px, calc(100vw - 32px));
+  }
+
+  .customerActions button {
+    width: min(310px, calc(100vw - 32px));
+  }
+
+  .errorState,
+  .error,
+  .loading,
+  .noNotes {
+    padding: 1rem 2.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .centralize {
+    padding-top: 12px;
+  }
+
+  .customerName {
+    padding-bottom: 0.8rem;
+  }
+
+  .title {
+    margin: 0.35rem 0 0.65rem;
+  }
+
+  .notesList {
+    height: 42vh;
+    flex-basis: 42vh;
+  }
 }

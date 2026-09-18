@@ -19,13 +19,13 @@ function Dashboard() {
 
       <div className={styles.actions}>
         <Link to="/clientes">
-          <BigButton icon="newCostumer" name="CLIENTES" />
+          <BigButton icon="newCostumer" name="Clientes" />
         </Link>
         <Link to="/agenda">
-          <BigButton icon="calendar" name="AGENDA" />
+          <BigButton icon="calendar" name="Agenda" />
         </Link>
         <SubmitButton
-          text="DESLOGAR"
+          text="Deslogar"
           customClass="logoffBtn"
           onClick={handleLogout}
         />

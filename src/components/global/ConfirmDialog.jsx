@@ -9,11 +9,11 @@ function ConfirmDialog({ message, onCancel, onConfirm }) {
         <p>{message}</p>
         <div className={styles.actions}>
           <SubmitButton
-            text="CANCELAR"
+            text="Cancelar"
             customClass="logoffBtn"
             onClick={onCancel}
           />
-          <SubmitButton text="CONFIRMAR" onClick={onConfirm} />
+          <SubmitButton text="Confirmar" onClick={onConfirm} />
         </div>
       </div>
     </div>

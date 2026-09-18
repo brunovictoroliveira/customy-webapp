@@ -523,14 +523,15 @@
   overflow: hidden;
   padding: 5px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 20px;
   background: #fff;
   box-shadow: 0 6px 18px rgb(0 0 0/20%);
 }
 .contextMenu button {
   width: 100%;
-  padding: 8px 9px;
-  border-radius: 4px;
+  min-height: 52px;
+  padding: 0 14px;
+  border-radius: 20px;
   background: #fff;
   color: #333;
   text-align: left;
@@ -649,8 +650,8 @@
 }
 .modalActions button {
   min-width: 79px;
-  height: 30px;
-  border-radius: 5px;
+  height: 52px;
+  border-radius: 20px;
   font-weight: 500;
   cursor: pointer;
 }

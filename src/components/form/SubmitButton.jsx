@@ -8,7 +8,11 @@ function SubmitButton({
   onClick,
   type = 'button',
 }) {
-  const variantClass = customClass ? styles[customClass] : '';
+  const variantClass = customClass
+    .split(' ')
+    .filter(Boolean)
+    .map((className) => styles[className] || className)
+    .join(' ');
 
   return (
     <button

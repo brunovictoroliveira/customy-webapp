@@ -1,6 +1,6 @@
 import styles from './Notes.module.css';
 import NoteCard from '../components/notes_page/NoteCard';
-import Container from '../components/layout/Container';
+import AgendaNavbar from '../components/layout/AgendaNavbar';
 import BigButton from '../components/global/BigButton';
 import ConfirmDialog from '../components/global/ConfirmDialog';
 import SubmitButton from '../components/form/SubmitButton';
@@ -62,82 +62,95 @@ function Notes() {
     }
   };
 
-  if (loading) {
-    return <p className={styles.loading}>Carregando...</p>;
-  }
-
-  if (error) {
-    return (
-      <div>
-        <p className={styles.error}>{error}</p>
-        <SubmitButton text="TENTAR NOVAMENTE" onClick={fetchCustomerData} />
-      </div>
-    );
-  }
-
-  if (!customer) {
-    return (
-      <p className={styles.error}>Informações do cliente não disponíveis.</p>
-    );
-  }
-
   return (
-    <Container>
-      <div className={styles.centralize}>
-        <div className={styles.header}>
-          <h1 className={styles.customerName}>{customer.name}</h1>
-          <div className={styles.customerActions}>
-            <Link to={`/clientes/${id}/informacoes`}>
+    <div className={styles.page}>
+      <AgendaNavbar />
+      <main className={styles.main}>
+        <div className={styles.centralize}>
+          {loading ? (
+            <p className={styles.loading}>Carregando...</p>
+          ) : error ? (
+            <div className={styles.errorState}>
+              <p className={styles.error}>{error}</p>
               <SubmitButton
-                text="INFORMAÇÕES DO CLIENTE"
-                customClass="customerInfoBtn"
+                text="Tentar novamente"
+                onClick={fetchCustomerData}
               />
-            </Link>
-          </div>
-          <div className={styles.title}>Histórico</div>
-        </div>
-
-        <div className={styles.notesList}>
-          {notes.length > 0 ? (
-            notes.map((note) => (
-              <NoteCard
-                key={note.id}
-                title={note.title}
-                content={note.note || ''}
-                date={note.date || 'Data não disponível'}
-                expanded={String(expandedNoteId) === String(note.id)}
-                onExpand={() =>
-                  setExpandedNoteId((currentId) =>
-                    String(currentId) === String(note.id) ? null : note.id,
-                  )
-                }
-                onEdit={() => navigate(`/anotacoes/${id}/editar/${note.id}`)}
-                onDelete={() => setNoteToDelete(note)}
-              />
-            ))
+            </div>
+          ) : !customer ? (
+            <p className={styles.error}>
+              Informações do cliente não disponíveis.
+            </p>
           ) : (
-            <p className={styles.noNotes}>Nenhuma anotação encontrada.</p>
+            <>
+              <div className={styles.header}>
+                <h1 className={styles.customerName}>{customer.name}</h1>
+                <div className={styles.customerActions}>
+                  <Link to={`/clientes/${id}/informacoes`}>
+                    <SubmitButton
+                      text="Informações do cliente"
+                      customClass="customerInfoBtn interBold"
+                    />
+                  </Link>
+                </div>
+                <div className={styles.title}>Histórico</div>
+              </div>
+
+              <div className={styles.notesList}>
+                {notes.length > 0 ? (
+                  notes.map((note) => (
+                    <NoteCard
+                      key={note.id}
+                      title={note.title}
+                      content={note.note || ''}
+                      date={note.date || 'Data não disponível'}
+                      expanded={String(expandedNoteId) === String(note.id)}
+                      onExpand={() =>
+                        setExpandedNoteId((currentId) =>
+                          String(currentId) === String(note.id)
+                            ? null
+                            : note.id,
+                        )
+                      }
+                      onEdit={() =>
+                        navigate(`/anotacoes/${id}/editar/${note.id}`)
+                      }
+                      onDelete={() => setNoteToDelete(note)}
+                    />
+                  ))
+                ) : (
+                  <p className={styles.noNotes}>Nenhuma anotação encontrada.</p>
+                )}
+              </div>
+
+              <div className={styles.pageActions}>
+                <Link to="/clientes">
+                  <SubmitButton
+                    text="Voltar"
+                    customClass="logoffBtn interBold"
+                  />
+                </Link>
+                <Link to={`/anotacoes/${id}/nova`}>
+                  <BigButton
+                    icon="newNote"
+                    name="Nova anotação"
+                    customClass="interBold"
+                  />
+                </Link>
+              </div>
+            </>
+          )}
+
+          {noteToDelete && (
+            <ConfirmDialog
+              message={`Deseja excluir a anotação "${noteToDelete.title}"?`}
+              onCancel={() => setNoteToDelete(null)}
+              onConfirm={confirmDelete}
+            />
           )}
         </div>
-
-        <div className={styles.pageActions}>
-          <Link to={`/anotacoes/${id}/nova`}>
-            <BigButton icon="newNote" name="NOVA ANOTAÇÃO" />
-          </Link>
-          <Link to="/clientes">
-            <SubmitButton text="VOLTAR" customClass="logoffBtn" />
-          </Link>
-        </div>
-
-        {noteToDelete && (
-          <ConfirmDialog
-            message={`Deseja excluir a anotação "${noteToDelete.title}"?`}
-            onCancel={() => setNoteToDelete(null)}
-            onConfirm={confirmDelete}
-          />
-        )}
-      </div>
-    </Container>
+      </main>
+    </div>
   );
 }
 

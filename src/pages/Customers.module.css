@@ -1,36 +1,89 @@
-.title {
-  font-size: 2.5rem;
-  color: var(--yellow);
-  padding-bottom: 30px;
+.page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--darkgray);
 }
 
-.customersList {
-  height: 40vh;
-  width: 100vw;
-  margin: 1.6rem 0;
-
-  /* implementação de rolagem */
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  background-color: var(--darkgray);
+.main {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
 }
 
 .centralize {
+  width: min(1120px, calc(100% - 80px));
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  /* tamanho da view */
-  height: 88vh;
+  margin: 0 auto;
+  padding: 52px 0 42px;
 }
 
-.centralize .buttons {
+.top {
+  flex: 0 0 auto;
+}
+
+.headingRow {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: auto;
-  gap: 0.6rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 34px;
+}
+
+.title {
+  color: var(--yellow);
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: var(--lightgray);
+  font-size: 1rem;
+}
+
+.desktopNewCustomer {
+  flex: 0 0 auto;
+}
+
+.desktopNewCustomer > div {
+  width: 225px;
+  height: 48px;
+}
+
+.searchField {
+  width: 100%;
+  margin: 0;
+}
+
+.searchField input {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 8px;
+  background: #242424;
+}
+
+.customersList {
+  min-height: 240px;
+  flex: 1;
+  width: 100%;
+  margin: 28px 0 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+  background: var(--darkgray);
+  scrollbar-width: thin;
+  scrollbar-color: #666 transparent;
+}
+
+.mobileActions {
+  display: none;
 }
 
 .error,
@@ -38,4 +91,125 @@
   color: var(--yellow);
   padding: 1rem 2.5rem;
   text-align: center;
+}
+
+/* Tablet */
+@media (min-width: 681px) and (max-width: 1024px) {
+  .centralize {
+    width: min(760px, calc(100% - 64px));
+    padding: 42px 0 34px;
+  }
+
+  .headingRow {
+    margin-bottom: 28px;
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .desktopNewCustomer > div {
+    width: 205px;
+  }
+
+  .customersList {
+    margin-top: 24px;
+  }
+}
+
+/* Mobile: preserva a diagramação original da página Clientes. */
+@media (max-width: 680px) {
+  .page {
+    position: fixed;
+  }
+
+  .main {
+    overflow-x: hidden;
+  }
+
+  .centralize {
+    width: 100%;
+    height: calc(100dvh - 52px);
+    min-height: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0 18px;
+  }
+
+  .top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .headingRow {
+    display: block;
+    margin: 0;
+  }
+
+  .title {
+    padding-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 400;
+  }
+
+  .subtitle,
+  .desktopNewCustomer {
+    display: none;
+  }
+
+  .searchField {
+    width: auto;
+    margin-bottom: 1rem;
+  }
+
+  .searchField input {
+    width: 350px;
+    height: 52px;
+    padding-left: 10px;
+    border-radius: 20px;
+    background: var(--darkgray);
+  }
+
+  .customersList {
+    height: 40vh;
+    min-height: 0;
+    flex: 0 1 40vh;
+    width: 100vw;
+    margin: 1.6rem 0;
+    border-radius: 0;
+    background: var(--darkgray);
+  }
+
+  .mobileActions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .centralize {
+    padding-top: 18px;
+  }
+
+  .title {
+    padding-bottom: 20px;
+    font-size: 2.25rem;
+  }
+
+  .searchField input {
+    width: min(350px, calc(100vw - 32px));
+  }
+
+  .customersList {
+    margin: 1rem 0;
+  }
+
+  .mobileActions {
+    gap: 0.45rem;
+  }
 }

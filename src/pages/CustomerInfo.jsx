@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styles from './CustomerInfo.module.css';
 import SubmitButton from '../components/form/SubmitButton';
 import BigButton from '../components/global/BigButton';
+import AgendaNavbar from '../components/layout/AgendaNavbar';
 import api from '../services/api';
 
 const formatBirthDate = (birthDate) => {
@@ -43,50 +44,65 @@ function CustomerInfo() {
     fetchCustomer();
   }, [id]);
 
-  if (loading) {
-    return <p className={styles.message}>Carregando...</p>;
-  }
-
-  if (error) {
-    return <p className={styles.message}>{error}</p>;
-  }
-
   return (
-    <section className={styles.page}>
-      <h1 className={styles.title}>Informações do cliente</h1>
+    <div className={styles.page}>
+      <AgendaNavbar />
+      <main className={styles.main}>
+        <div className={styles.centralize}>
+          {loading ? (
+            <p className={styles.message}>Carregando...</p>
+          ) : error ? (
+            <p className={styles.message}>{error}</p>
+          ) : (
+            <>
+              <header className={styles.header}>
+                <h1 className={styles.title}>Informações do cliente</h1>
+                <p className={styles.subtitle}>{customer.name}</p>
+              </header>
 
-      <dl className={styles.infoList}>
-        <div className={styles.infoItem}>
-          <dt>Nome</dt>
-          <dd>{customer.name || 'Não informado'}</dd>
-        </div>
-        <div className={styles.infoItem}>
-          <dt>Telefone</dt>
-          <dd>{customer.phone || 'Não informado'}</dd>
-        </div>
-        <div className={styles.infoItem}>
-          <dt>E-mail</dt>
-          <dd>{customer.email || 'Não informado'}</dd>
-        </div>
-        <div className={styles.infoItem}>
-          <dt>Data de nascimento</dt>
-          <dd>{formatBirthDate(customer.birthDate)}</dd>
-        </div>
-        <div className={styles.infoItem}>
-          <dt>Observação</dt>
-          <dd>{customer.observation || 'Não informada'}</dd>
-        </div>
-      </dl>
+              <dl className={styles.infoList}>
+                <div className={styles.infoItem}>
+                  <dt>Nome</dt>
+                  <dd>{customer.name || 'Não informado'}</dd>
+                </div>
+                <div className={styles.infoItem}>
+                  <dt>Telefone</dt>
+                  <dd>{customer.phone || 'Não informado'}</dd>
+                </div>
+                <div className={styles.infoItem}>
+                  <dt>E-mail</dt>
+                  <dd>{customer.email || 'Não informado'}</dd>
+                </div>
+                <div className={styles.infoItem}>
+                  <dt>Data de nascimento</dt>
+                  <dd>{formatBirthDate(customer.birthDate)}</dd>
+                </div>
+                <div className={styles.infoItem}>
+                  <dt>Observação</dt>
+                  <dd>{customer.observation || 'Não informada'}</dd>
+                </div>
+              </dl>
 
-      <div className={styles.actions}>
-        <Link to={`/clientes/editar/${id}`}>
-          <BigButton icon="save" name="EDITAR" />
-        </Link>
-        <Link to={`/anotacoes/${id}`}>
-          <SubmitButton text="VOLTAR" customClass="logoffBtn" />
-        </Link>
-      </div>
-    </section>
+              <div className={styles.actions}>
+                <Link to={`/anotacoes/${id}`}>
+                  <SubmitButton
+                    text="Voltar"
+                    customClass="logoffBtn interBold"
+                  />
+                </Link>
+                <Link to={`/clientes/editar/${id}`}>
+                  <BigButton
+                    icon="save"
+                    name="Editar"
+                    customClass="interBold"
+                  />
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
 

@@ -87,10 +87,10 @@ const NewCustomer = () => {
       </div>
       <div className={styles.buttons}>
         <button type="submit">
-          <BigButton icon="save" name="SALVAR" />
+          <BigButton icon="save" name="Salvar" />
         </button>
         <Link to="/clientes">
-          <SubmitButton text="VOLTAR" customClass="logoffBtn" />
+          <SubmitButton text="Voltar" customClass="logoffBtn" />
         </Link>
       </div>
       {error && <p className={styles.error}>{error}</p>}
