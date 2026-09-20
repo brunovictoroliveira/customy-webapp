@@ -92,7 +92,7 @@ function CustomerInfo() {
                 </Link>
                 <Link to={`/clientes/editar/${id}`}>
                   <BigButton
-                    icon="save"
+                    icon="edit"
                     name="Editar"
                     customClass="interBold"
                   />

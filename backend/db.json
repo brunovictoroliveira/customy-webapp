@@ -2,7 +2,7 @@
   "customers": [
     {
       "id": "1",
-      "name": "Bruno Silva",
+      "name": "Bruno Silva editado",
       "phone": "123-456-7890",
       "email": "bruno.silva@example.com",
       "observation": "",
@@ -184,6 +184,15 @@
       "customerId": "1",
       "updatedAt": "2026-06-25T19:28:29.913Z",
       "createdAt": "2026-06-25T19:28:29.913Z"
+    },
+    {
+      "id": "27e2",
+      "date": "2026-09-20",
+      "title": "anotação teste",
+      "note": "",
+      "customerId": "1",
+      "updatedAt": "2026-09-20T18:10:30.400Z",
+      "createdAt": "2026-09-20T18:10:30.400Z"
     }
   ],
   "appointments": [

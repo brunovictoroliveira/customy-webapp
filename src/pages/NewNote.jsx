@@ -123,10 +123,18 @@ const NewNote = () => {
       )}
       <div className={styles.buttons}>
         <button type="submit" disabled={loading}>
-          <BigButton icon="save" name="Salvar" />
+          <BigButton
+            icon="save"
+            name="Salvar"
+            customClass={styles.saveButtonText}
+          />
         </button>
         <Link to={customerId ? `/anotacoes/${customerId}` : '/clientes'}>
-          <SubmitButton text="Voltar" customClass="logoffBtn" />
+          <SubmitButton
+            text="Voltar"
+            customClass="logoffBtn interBold"
+            className={styles.backButton}
+          />
         </Link>
       </div>
       {error && <p className={styles.error}>{error}</p>}

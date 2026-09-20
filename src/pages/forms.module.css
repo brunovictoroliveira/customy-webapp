@@ -20,6 +20,19 @@
   gap: 0.6rem;
 }
 
+.backButton {
+  width: 310px;
+}
+
+.saveButtonText.saveButtonText {
+  font-size: 1rem;
+}
+
+.saveButtonIcon {
+  width: 16px;
+  height: 16px;
+}
+
 button {
   background-color: transparent;
 }

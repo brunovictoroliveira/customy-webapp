@@ -14,24 +14,32 @@
 .newCostumer {
   background-image: url('../../assets/icons/newcostumer_icon.svg');
   background-repeat: no-repeat;
-  width: 25px;
-  height: 25px;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
 }
 
 .newNote {
   background-image: url('../../assets/icons/edit_icon.svg');
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.edit {
+  background-image: url('../../assets/icons/edit_icon.svg');
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
 }
 
 .save {
   background-image: url('../../assets/icons/save_icon.svg');
   background-repeat: no-repeat;
-  width: 25px;
-  height: 25px;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
 }
 
@@ -46,8 +54,8 @@
 }
 
 .calendar {
-  width: 40px;
-  height: 40px;
+  width: 16px;
+  height: 16px;
   background-color: var(--purple);
   border-radius: 50%;
   position: relative;
@@ -56,8 +64,8 @@
 .calendar::before {
   content: '';
   position: absolute;
-  inset: 10px;
-  border: 3px solid var(--white);
-  border-top-width: 7px;
-  border-radius: 3px;
+  inset: 4px;
+  border: 1px solid var(--white);
+  border-top-width: 3px;
+  border-radius: 1px;
 }
