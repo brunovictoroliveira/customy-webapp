@@ -141,6 +141,10 @@ Não há configuração existente para Render, Railway ou Netlify no repositóri
 
 **Executada em 2026-10-07.** Uma segunda conta temporária de QA foi criada pelo endpoint de cadastro; suas listas de clientes, anotações e agendamentos vieram vazias. Com seu token, as tentativas de ler um cliente e um agendamento da primeira conta retornaram `404`. No navegador, a primeira conta manteve a sessão e os dados após recarregar a página; logout retornou ao login e um novo login retornou corretamente à agenda. `npm run lint`, `npm run build` e `git diff --check` foram aprovados. A build mantém somente o aviso não bloqueante sobre o bundle acima de 500 kB.
 
+### D2.09 — publicação da API no Render
+
+**Executada em 2026-10-07.** A API foi publicada no Render em `https://customy-api.onrender.com`. O Atlas foi configurado para aceitar a conexão do ambiente hospedado e o endpoint HTTPS `GET /health` retornou `{"status":"ok"}`. Os segredos permanecem configurados exclusivamente nas variáveis de ambiente do Render; não foram registrados no repositório.
+
 ## Plano de execução
 
 Cada bloco abaixo dura no máximo 30 minutos. Execute em ordem e pare ao final de um bloco se houver credencial, conta externa ou decisão pendente. Não publique segredo em arquivos versionados, logs ou conversas.
