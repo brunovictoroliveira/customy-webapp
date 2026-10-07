@@ -1,61 +1,41 @@
-const STORAGE_KEY = 'customy_users';
+import api from './api';
+
 const SESSION_KEY = 'customy_session';
 
-const defaultUser = {
-  name: 'Usuário de Teste',
-  document: '00000000000',
-  email: 'teste@email.com',
-  password: '123456',
-};
-
-export const getUsers = () => {
-  const savedUsers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  const hasDefaultUser = savedUsers.some(
-    (user) => user.email === defaultUser.email,
-  );
-
-  return hasDefaultUser ? savedUsers : [defaultUser, ...savedUsers];
-};
-
-export const signup = (user) => {
-  const users = getUsers();
-  const emailAlreadyExists = users.some(
-    (savedUser) => savedUser.email.toLowerCase() === user.email.toLowerCase(),
-  );
-
-  if (emailAlreadyExists) {
-    throw new Error('Já existe uma conta cadastrada com este e-mail.');
-  }
-
-  const userToSave = {
-    name: user.name,
-    document: user.document,
-    email: user.email,
-    password: user.password,
-  };
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...users, userToSave]));
-  return userToSave;
-};
-
-export const login = ({ email, password }) => {
-  const user = getUsers().find(
-    (savedUser) =>
-      savedUser.email.toLowerCase() === email.toLowerCase() &&
-      savedUser.password === password,
-  );
-
-  if (!user) {
-    throw new Error('E-mail ou senha inválidos.');
-  }
-
-  const session = {
-    name: user.name,
-    email: user.email,
-  };
-
+const saveSession = ({ token, user }) => {
+  const session = { token, ...user };
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   return session;
+};
+
+const getErrorMessage = (error, fallback) => {
+  return error.response?.data?.message || fallback;
+};
+
+export const signup = async ({ name, document, email, password }) => {
+  try {
+    const { data } = await api.post('/auth/register', {
+      name,
+      document,
+      email,
+      password,
+    });
+
+    return saveSession(data);
+  } catch (error) {
+    throw new Error(getErrorMessage(error, 'Não foi possível criar a conta.'));
+  }
+};
+
+export const login = async ({ email, password }) => {
+  try {
+    const { data } = await api.post('/auth/login', { email, password });
+    return saveSession(data);
+  } catch (error) {
+    throw new Error(
+      getErrorMessage(error, 'Não foi possível entrar na conta.'),
+    );
+  }
 };
 
 export const logout = () => {
@@ -63,9 +43,14 @@ export const logout = () => {
 };
 
 export const getSession = () => {
-  return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+  try {
+    return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+  } catch {
+    logout();
+    return null;
+  }
 };
 
-export const isAuthenticated = () => {
-  return Boolean(getSession());
-};
+export const getToken = () => getSession()?.token || null;
+
+export const isAuthenticated = () => Boolean(getToken());

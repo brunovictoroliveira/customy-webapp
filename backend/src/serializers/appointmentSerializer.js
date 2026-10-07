@@ -1,4 +1,4 @@
-import { formatDateOnly } from "../utils/date.js";
+import { formatDateOnly } from '../utils/date.js';
 
 export const serializeAppointment = (appointment) => {
   const data = appointment.toJSON();

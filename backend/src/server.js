@@ -1,6 +1,6 @@
-import { env } from "./config/env.js";
-import { connectDatabase } from "./config/database.js";
-import { createApp } from "./app.js";
+import { env } from './config/env.js';
+import { connectDatabase } from './config/database.js';
+import { createApp } from './app.js';
 
 const startServer = async () => {
   await connectDatabase();
@@ -13,6 +13,6 @@ const startServer = async () => {
 };
 
 startServer().catch((error) => {
-  console.error("Failed to start Customy API:", error);
+  console.error('Failed to start Customy API:', error);
   process.exit(1);
 });

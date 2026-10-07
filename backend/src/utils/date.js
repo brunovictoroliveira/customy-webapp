@@ -21,7 +21,7 @@ export const dateOnlyRange = (value) => {
 
 export const formatDateOnly = (date) => {
   if (!date) {
-    return "";
+    return '';
   }
 
   return new Date(date).toISOString().slice(0, 10);

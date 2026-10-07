@@ -19,7 +19,7 @@ function Login() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -29,7 +29,7 @@ function Login() {
     }
 
     try {
-      login(formData);
+      await login(formData);
       navigate('/agenda');
     } catch (err) {
       setError(err.message);

@@ -1,24 +1,24 @@
-import mongoose from "mongoose";
-import { schemaOptions } from "./schemaOptions.js";
+import mongoose from 'mongoose';
+import { schemaOptions } from './schemaOptions.js';
 
 const organizationSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Organization name is required."],
+      required: [true, 'Organization name is required.'],
       trim: true,
       maxlength: 120,
     },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
     status: {
       type: String,
-      enum: ["active", "inactive"],
-      default: "active",
+      enum: ['active', 'inactive'],
+      default: 'active',
       index: true,
     },
     deletedAt: {
@@ -27,9 +27,9 @@ const organizationSchema = new mongoose.Schema(
       index: true,
     },
   },
-  schemaOptions,
+  schemaOptions
 );
 
 organizationSchema.index({ ownerId: 1, name: 1 });
 
-export const Organization = mongoose.model("Organization", organizationSchema);
+export const Organization = mongoose.model('Organization', organizationSchema);

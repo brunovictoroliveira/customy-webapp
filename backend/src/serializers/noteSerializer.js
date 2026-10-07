@@ -1,4 +1,4 @@
-import { formatDateOnly } from "../utils/date.js";
+import { formatDateOnly } from '../utils/date.js';
 
 export const serializeNote = (note) => {
   const data = note.toJSON();
@@ -6,6 +6,6 @@ export const serializeNote = (note) => {
   return {
     ...data,
     date: formatDateOnly(data.date),
-    note: data.content || "",
+    note: data.content || '',
   };
 };

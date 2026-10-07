@@ -1,23 +1,23 @@
-import mongoose from "mongoose";
-import { schemaOptions } from "./schemaOptions.js";
+import mongoose from 'mongoose';
+import { schemaOptions } from './schemaOptions.js';
 
 const customerSchema = new mongoose.Schema(
   {
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Organization",
+      ref: 'Organization',
       default: null,
       index: true,
     },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       default: null,
       index: true,
     },
     name: {
       type: String,
-      required: [true, "Customer name is required."],
+      required: [true, 'Customer name is required.'],
       trim: true,
       maxlength: 120,
     },
@@ -25,20 +25,20 @@ const customerSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: 32,
-      default: "",
+      default: '',
     },
     email: {
       type: String,
       trim: true,
       lowercase: true,
       maxlength: 180,
-      default: "",
+      default: '',
     },
     socialProfile: {
       type: String,
       trim: true,
       maxlength: 180,
-      default: "",
+      default: '',
     },
     birthDate: {
       type: Date,
@@ -48,12 +48,12 @@ const customerSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: 5000,
-      default: "",
+      default: '',
     },
     status: {
       type: String,
-      enum: ["active", "archived"],
-      default: "active",
+      enum: ['active', 'archived'],
+      default: 'active',
       index: true,
     },
     deletedAt: {
@@ -62,7 +62,7 @@ const customerSchema = new mongoose.Schema(
       index: true,
     },
   },
-  schemaOptions,
+  schemaOptions
 );
 
 customerSchema.index({ organizationId: 1, name: 1 });
@@ -70,4 +70,4 @@ customerSchema.index({ ownerId: 1, name: 1 });
 customerSchema.index({ phone: 1 });
 customerSchema.index({ email: 1 });
 
-export const Customer = mongoose.model("Customer", customerSchema);
+export const Customer = mongoose.model('Customer', customerSchema);

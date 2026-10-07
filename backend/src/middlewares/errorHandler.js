@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { env } from "../config/env.js";
+import mongoose from 'mongoose';
+import { env } from '../config/env.js';
 
 export const notFoundHandler = (req, res, next) => {
   const error = new Error(`Route not found: ${req.method} ${req.originalUrl}`);
@@ -14,27 +14,27 @@ export const errorHandler = (error, req, res, next) => {
   }
 
   let statusCode = error.statusCode || 500;
-  let message = error.message || "Internal server error";
+  let message = error.message || 'Internal server error';
 
   if (error instanceof mongoose.Error.ValidationError) {
     statusCode = 400;
     message = Object.values(error.errors)
       .map((item) => item.message)
-      .join(", ");
+      .join(', ');
   }
 
-  if (error.name === "CastError") {
+  if (error.name === 'CastError') {
     statusCode = 400;
-    message = "Invalid identifier.";
+    message = 'Invalid identifier.';
   }
 
   if (error.code === 11000) {
     statusCode = 409;
-    message = "Duplicated value.";
+    message = 'Duplicated value.';
   }
 
   res.status(statusCode).json({
     message,
-    ...(env.nodeEnv !== "production" ? { stack: error.stack } : {}),
+    ...(env.nodeEnv !== 'production' ? { stack: error.stack } : {}),
   });
 };

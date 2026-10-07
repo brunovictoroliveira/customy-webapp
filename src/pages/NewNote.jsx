@@ -65,19 +65,17 @@ const NewNote = () => {
     }
 
     const payload = {
-      ...note,
       customerId: String(customerId),
-      updatedAt: new Date().toISOString(),
+      date: note.date,
+      title: note.title,
+      content: note.note,
     };
 
     try {
       if (isEditing) {
         await api.put(`/notes/${noteId}`, payload);
       } else {
-        await api.post('/notes', {
-          ...payload,
-          createdAt: new Date().toISOString(),
-        });
+        await api.post('/notes', payload);
       }
 
       navigate(`/anotacoes/${customerId}`);

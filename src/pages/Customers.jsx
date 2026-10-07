@@ -45,12 +45,6 @@ function Customers() {
     }
 
     try {
-      const notesResponse = await api.get(
-        `/notes?customerId=${customerToDelete.id}`,
-      );
-      await Promise.all(
-        notesResponse.data.map((note) => api.delete(`/notes/${note.id}`)),
-      );
       await api.delete(`/customers/${customerToDelete.id}`);
       setCustomers((currentCustomers) =>
         currentCustomers.filter(
@@ -118,7 +112,7 @@ function Customers() {
           </div>
           {customerToDelete && (
             <ConfirmDialog
-              message={`Deseja excluir ${customerToDelete.name} e suas anotações?`}
+              message={`Deseja excluir ${customerToDelete.name}, suas anotações e compromissos?`}
               onCancel={() => setCustomerToDelete(null)}
               onConfirm={confirmDelete}
             />

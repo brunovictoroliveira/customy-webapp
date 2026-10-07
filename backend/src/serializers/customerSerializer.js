@@ -3,8 +3,6 @@ export const serializeCustomer = (customer) => {
 
   return {
     ...data,
-    birthDate: data.birthDate
-      ? data.birthDate.toISOString().slice(0, 10)
-      : null,
+    birthDate: data.birthDate ? data.birthDate.toISOString().slice(0, 10) : null,
   };
 };

@@ -1,22 +1,22 @@
-import { Appointment } from "../models/Appointment.js";
-import { Customer } from "../models/Customer.js";
-import { serializeAppointment } from "../serializers/appointmentSerializer.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { dateOnlyRange, parseDateOnly } from "../utils/date.js";
-import { HttpError } from "../utils/httpError.js";
+import { Appointment } from '../models/Appointment.js';
+import { Customer } from '../models/Customer.js';
+import { serializeAppointment } from '../serializers/appointmentSerializer.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { dateOnlyRange, parseDateOnly } from '../utils/date.js';
+import { HttpError } from '../utils/httpError.js';
 
 const appointmentPayload = (body) => ({
   customerId: body.customerId || null,
   date: parseDateOnly(body.date),
   time: body.time,
   endTime: body.endTime || body.time,
-  description: body.description || "",
-  color: body.color || "#24b7f2",
-  status: body.status || "scheduled",
+  description: body.description || '',
+  color: body.color || '#24b7f2',
+  status: body.status || 'scheduled',
 });
 
 export const listAppointments = asyncHandler(async (req, res) => {
-  const filter = { deletedAt: null };
+  const filter = { ownerId: req.user._id, deletedAt: null };
 
   if (req.query.customerId) {
     filter.customerId = req.query.customerId;
@@ -41,11 +41,12 @@ export const listAppointments = asyncHandler(async (req, res) => {
 export const getAppointment = asyncHandler(async (req, res) => {
   const appointment = await Appointment.findOne({
     _id: req.params.id,
+    ownerId: req.user._id,
     deletedAt: null,
   });
 
   if (!appointment) {
-    throw new HttpError(404, "Appointment not found.");
+    throw new HttpError(404, 'Appointment not found.');
   }
 
   res.json(serializeAppointment(appointment));
@@ -55,27 +56,53 @@ export const createAppointment = asyncHandler(async (req, res) => {
   if (req.body.customerId) {
     const customer = await Customer.findOne({
       _id: req.body.customerId,
+      ownerId: req.user._id,
       deletedAt: null,
     });
 
     if (!customer) {
-      throw new HttpError(404, "Customer not found.");
+      throw new HttpError(404, 'Customer not found.');
     }
   }
 
-  const appointment = await Appointment.create(appointmentPayload(req.body));
+  const appointment = await Appointment.create({
+    ...appointmentPayload(req.body),
+    ownerId: req.user._id,
+  });
   res.status(201).json(serializeAppointment(appointment));
 });
 
 export const updateAppointment = asyncHandler(async (req, res) => {
+  const existingAppointment = await Appointment.findOne({
+    _id: req.params.id,
+    ownerId: req.user._id,
+    deletedAt: null,
+  });
+
+  if (!existingAppointment) {
+    throw new HttpError(404, 'Appointment not found.');
+  }
+
+  if (req.body.customerId) {
+    const customer = await Customer.findOne({
+      _id: req.body.customerId,
+      ownerId: req.user._id,
+      deletedAt: null,
+    });
+
+    if (!customer) {
+      throw new HttpError(404, 'Customer not found.');
+    }
+  }
+
   const appointment = await Appointment.findOneAndUpdate(
-    { _id: req.params.id, deletedAt: null },
+    { _id: existingAppointment._id, ownerId: req.user._id, deletedAt: null },
     appointmentPayload(req.body),
-    { new: true, runValidators: true },
+    { returnDocument: 'after', runValidators: true }
   );
 
   if (!appointment) {
-    throw new HttpError(404, "Appointment not found.");
+    throw new HttpError(404, 'Appointment not found.');
   }
 
   res.json(serializeAppointment(appointment));
@@ -83,13 +110,13 @@ export const updateAppointment = asyncHandler(async (req, res) => {
 
 export const deleteAppointment = asyncHandler(async (req, res) => {
   const appointment = await Appointment.findOneAndUpdate(
-    { _id: req.params.id, deletedAt: null },
+    { _id: req.params.id, ownerId: req.user._id, deletedAt: null },
     { deletedAt: new Date() },
-    { new: true },
+    { returnDocument: 'after' }
   );
 
   if (!appointment) {
-    throw new HttpError(404, "Appointment not found.");
+    throw new HttpError(404, 'Appointment not found.');
   }
 
   res.json({ id: appointment.id, deletedAt: appointment.deletedAt });

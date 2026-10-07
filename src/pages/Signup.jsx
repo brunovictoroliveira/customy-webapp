@@ -25,7 +25,7 @@ function Signup() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -56,8 +56,8 @@ function Signup() {
     }
 
     try {
-      signup(formData);
-      navigate('/');
+      await signup(formData);
+      navigate('/agenda');
     } catch (err) {
       setError(err.message);
     }
