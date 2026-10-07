@@ -50,7 +50,7 @@ function Signup() {
 
     if (!passwordRegex.test(formData.password)) {
       setError(
-        'A senha deve ter 8 caracteres, com maiúscula, minúscula, número e caractere especial.',
+        'A senha deve ter no mínimo 8 caracteres, com maiúscula, minúscula, número e caractere especial.',
       );
       return;
     }
