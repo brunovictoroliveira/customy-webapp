@@ -54,6 +54,13 @@
   padding-bottom: 10px;
 }
 
+.status {
+  color: var(--lightblue);
+  max-width: 310px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
 .lightblue {
   color: var(--lightblue);
 }

@@ -145,6 +145,18 @@ Não há configuração existente para Render, Railway ou Netlify no repositóri
 
 **Executada em 2026-10-07.** A API foi publicada no Render em `https://customy-api.onrender.com`. O Atlas foi configurado para aceitar a conexão do ambiente hospedado e o endpoint HTTPS `GET /health` retornou `{"status":"ok"}`. Os segredos permanecem configurados exclusivamente nas variáveis de ambiente do Render; não foram registrados no repositório.
 
+### D2.10 — publicação do frontend no Netlify
+
+**Executada em 2026-10-07.** O frontend foi publicado em `https://customy-app.netlify.app/`, com `VITE_API_URL` apontando para a API no Render. O `netlify.toml` define a build Vite (`dist`) e a reescrita SPA para `index.html`. A visibilidade do projeto foi ajustada para pública e a URL retornou o HTML da aplicação por HTTPS. A autorização CORS da origem do Netlify será concluída na D2.11.
+
+### D2.11 — CORS de produção
+
+**Executada em 2026-10-07.** `CORS_ORIGIN` foi atualizado no Render para `https://customy-app.netlify.app`. O preflight para `POST /auth/login` respondeu `204` com `Access-Control-Allow-Origin` igual à origem do Netlify, e um login HTTPS com essa origem retornou token e usuário público. A comunicação entre frontend e API está liberada por HTTPS.
+
+### D2.12 — validação final de produção e roteiro
+
+**Executada em 2026-10-07.** Em produção, duas contas temporárias de QA foram usadas na validação final. A segunda começou sem clientes; consultas cruzadas de cliente, anotação e agendamento retornaram `404`. Para a primeira conta, foram validados criação, edição e exclusão lógica dos três recursos, seguida de `404` nas consultas dos registros excluídos. A rota publicada `/agenda` retornou `200` e o HTML da SPA. `npm run lint`, `npm run build` e `git diff --check` foram aprovados; a build conserva somente o aviso não bloqueante de bundle acima de 500 kB. O roteiro de demonstração está em `docs/roteiro-apresentacao.md`.
+
 ## Plano de execução
 
 Cada bloco abaixo dura no máximo 30 minutos. Execute em ordem e pare ao final de um bloco se houver credencial, conta externa ou decisão pendente. Não publique segredo em arquivos versionados, logs ou conversas.
