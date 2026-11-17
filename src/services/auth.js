@@ -32,10 +32,19 @@ export const login = async ({ email, password }) => {
     const { data } = await api.post('/auth/login', { email, password });
     return saveSession(data);
   } catch (error) {
-    throw new Error(
-      getErrorMessage(error, 'Não foi possível entrar na conta.'),
-    );
+    throw new Error(getErrorMessage(error, 'Não foi possível entrar na conta.'), {
+      cause: error,
+    });
   }
+};
+
+export const isTransientLoginError = (error) => {
+  const cause = error.cause || error;
+  return (
+    !cause.response ||
+    cause.code === 'ECONNABORTED' ||
+    cause.response.status >= 500
+  );
 };
 
 export const logout = () => {

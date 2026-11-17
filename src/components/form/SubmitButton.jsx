@@ -7,6 +7,7 @@ function SubmitButton({
   className = '',
   onClick,
   type = 'button',
+  disabled = false,
 }) {
   const variantClass = customClass
     .split(' ')
@@ -19,6 +20,7 @@ function SubmitButton({
       className={`${styles.btn} ${variantClass} ${className}`.trim()}
       onClick={onClick}
       type={type}
+      disabled={disabled}
     >
       {text}
     </button>
@@ -31,6 +33,7 @@ SubmitButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default SubmitButton;

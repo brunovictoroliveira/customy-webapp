@@ -4,7 +4,9 @@ import styles from './Login.module.css';
 
 import Input from '../components/form/Input';
 import SubmitButton from '../components/form/SubmitButton';
-import { login } from '../services/auth';
+import { isTransientLoginError, login } from '../services/auth';
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Login() {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ function Login() {
     password: '',
   });
   const [error, setError] = useState('');
+  const [connecting, setConnecting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,11 +31,24 @@ function Login() {
       return;
     }
 
+    setConnecting(true);
     try {
-      await login(formData);
-      navigate('/agenda');
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+          await login(formData);
+          navigate('/agenda');
+          return;
+        } catch (err) {
+          if (!isTransientLoginError(err) || attempt === 2) throw err;
+          await sleep(1500);
+        }
+      }
     } catch (err) {
-      setError(err.message);
+      setError(isTransientLoginError(err)
+        ? 'Não foi possível conectar ao servidor. Tente novamente em instantes.'
+        : err.message);
+    } finally {
+      setConnecting(false);
     }
   };
 
@@ -72,12 +88,15 @@ function Login() {
               handleOnChange={handleChange}
             />
 
-            {error && <p className={styles.error}>{error}</p>}
+            {connecting && <p role="status" className={styles.status}>Conectando ao servidor. Aguarde…</p>}
+            {error && <p role="alert" className={styles.error}>{error}</p>}
 
             <SubmitButton
               text="Fazer login"
               type="submit"
               className="interBold"
+              disabled={connecting}
+              text={connecting ? 'Conectando…' : 'Fazer login'}
             />
 
             <Link to="/">
